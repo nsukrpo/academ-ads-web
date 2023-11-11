@@ -1,7 +1,9 @@
+import Header from "./components/header/Header";
+
 function App() {
   return (
     <div className="App">
-      <h1>Academ Ads</h1>
+      <Header/>
     </div>
   );
 }

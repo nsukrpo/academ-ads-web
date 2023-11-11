@@ -1,0 +1,33 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--maincolor-secondary, #191919);
+}
+
+.container {
+    max-width: 1720;
+    margin: 0 auto;
+}
+
+.heading__C1 {
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px; /* 118.75% */
+}
+
+.heading__C1, .white {
+    color: #FFF
+}
+
+.heading__C2 {
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 19px; /* 118.75% */
+}
+
+.heading__C2, .green {
+    color: #0BCE83;
+}

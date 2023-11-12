@@ -5,12 +5,7 @@
 .header__row {
     display: flex;
     column-gap: 30px;
-    align-items: center;
     justify-content: space-between;
-}
-
-.header__logo {
-    display: flex;
 }
 
 .header__dropdown {

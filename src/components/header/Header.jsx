@@ -2,6 +2,7 @@ import logoImg from './../../images/academ_ads_logo.svg';
 import avatarImg from './../../images/admin_avatar.svg';
 import './header.css';
 import './../../styles/common.css'
+import './../../styles/text.css'
 import { useState } from 'react';
 
 function Header () {
@@ -17,13 +18,13 @@ function Header () {
         <header className="header">
             <div className="container">
                 <div className="header__row">
-                    <div className="header__logo">
+                    <div className="logo">
                         <img src={logoImg} alt="Logo"/>
                     </div>
 
                     <div className="header__title__column"> 
                         <div className="header__title">Academ Ads</div>
-                        <div className="heading__C1 white">admin app</div>
+                        <div className="heading__C1">admin app</div>
                     </div>
 
                     <button className='profile_button' onClick = {onProfileClick}>

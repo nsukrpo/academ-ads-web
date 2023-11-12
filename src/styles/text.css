@@ -14,9 +14,11 @@
     font-weight: 700;
     line-height: 19px; /* 118.75% */
 }
-
 .heading__C2.green {
     color: #0BCE83;
+}
+.heading__C2.secondary {
+    color: var(--maincolor-secondary, #191919);
 }
 
 .heading__A3 {
@@ -38,4 +40,27 @@
 
 .heading__B1.platinum {
     color: var(--grayscale-platinum, #E6E6E6);
+}
+.heading__B1.violet {
+    color: var(--maincolor-primary, #7203FF);
+}
+
+.heading__A2 {
+    color:#FFF;
+    font-family: Roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px; /* 116.667% */
+}
+
+.paragraph__B1 {
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px; /* 116.667% */
+}
+.paragraph__B1.gray {
+    color: var(--grayscale-gray, #808080);
 }

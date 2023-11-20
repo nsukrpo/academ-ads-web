@@ -15,9 +15,7 @@ function Header () {
     }
 
     return (
-        <header className="header">
-            <div className="container">
-                <div className="header__row">
+        <header className="header__row">
                     <div className="logo">
                         <img src={logoImg} alt="Logo"/>
                     </div>
@@ -31,8 +29,6 @@ function Header () {
                         <div className="heading__C2 green">admin</div>
                         <img src={avatarImg} alt="Avatar"/>
                     </button>
-                </div>
-            </div>
         </header>
     );
 }

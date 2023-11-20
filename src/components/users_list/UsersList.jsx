@@ -9,7 +9,7 @@ export default UsersList;
 function UsersList() {
 
     return(
-        <div className="users">
+        <div className="column users">
             <div className="users__list__header">
                 <div className="heading__A2">СПИСОК ПОЛЬЗОВАТЕЛЕЙ</div>
 

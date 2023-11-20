@@ -10,3 +10,8 @@
     border: 0;
     background: var(--grayscale-nickel, #737373);
 }
+
+.nav__button {
+    position: absolute;
+    right: 0px;
+}

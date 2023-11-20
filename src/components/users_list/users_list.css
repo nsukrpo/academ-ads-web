@@ -1,6 +1,4 @@
-.users {
-    display: flex;
-    flex-direction: column;
+.column.users {
     gap: 32px;
 }
 

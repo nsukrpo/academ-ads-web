@@ -1,6 +1,6 @@
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
-import UserInfo from "./components/user_info/UserInfo";
+import UsersList from "./components/users_list/UsersList";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
           <Sidebar/>
           <div className="vertical__line"/>
           <div className="column">
-            <UserInfo/>            
+            <UsersList/>
           </div>
         </div>
       </div>

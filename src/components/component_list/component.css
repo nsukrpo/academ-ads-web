@@ -1,4 +1,4 @@
-.advertisement__list {
+.content__list {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -14,13 +14,13 @@
     background: var(--grayscale-nickel, #737373);
 }
 
-.ad__content {
+.component__content {
     display: flex;
     max-width: 632px;
     flex-direction: column;
     gap: 8px;
     margin-top: 5px;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-bottom: 10px;
 }
 

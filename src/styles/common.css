@@ -4,8 +4,10 @@ body {
 }
 
 .container {
-    max-width: 1720;
-    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    margin: 20px 25px;
 }
 
 .row {
@@ -13,10 +15,18 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    align-self: stretch;
+    
 }
 .column {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    align-self: stretch;
+    flex-grow: 1;
 }
 
 .logo {
@@ -36,6 +46,7 @@ body {
     background-color: #CBF265;
     border: 0px;
     margin-top: 30px;
+    align-self: stretch;
 }
 
 .arrows{
@@ -53,4 +64,16 @@ body {
     border-radius: 8px;
     border: 1px solid var(--grayscale-nickel, #737373);
     background: var(--grayscale-nickel, #737373);
+}
+
+.tapbar {
+    display: flex;
+    width: 1108px;
+    padding: 15px 25px;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+    background: var(--grayscale-raisin-black, #262626);
+    position:fixed;
+    bottom: 0;
 }

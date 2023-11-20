@@ -124,3 +124,8 @@
     line-height: 19px;
     text-transform: uppercase;
 }
+
+.nav__text {
+    text-decoration: none;
+    padding: 0 15px
+}

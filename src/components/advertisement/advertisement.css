@@ -74,15 +74,3 @@
     border-radius: 15px;
     background: var(--grayscale-nickel, #737373);
 }
-
-.ad__tapbar {
-    display: flex;
-    width: 1108px;
-    padding: 15px 25px;
-    align-items: center;
-    gap: 20px;
-    flex-shrink: 0;
-    background: var(--grayscale-raisin-black, #262626);
-    position:fixed;
-    bottom: 0;
-}

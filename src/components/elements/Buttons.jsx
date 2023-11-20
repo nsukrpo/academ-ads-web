@@ -2,13 +2,14 @@ import './../../styles/common.css';
 import './../../styles/buttons.css';
 import backArrowImg from './../../images/back_arrow.svg'
 import navigationImg from './../../images/navigation.svg'
+import searchImg from './../../images/search.svg'
+import rightArrowImg from './../../images/right_arrow.svg'
+import leftArrowImg from './../../images/left_arrow.svg'
 
 
 export function SearchButton() {
     return(
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.89162 3.39162C-0.963873 7.32118 -0.963873 13.6973 2.89162 17.5528C6.82118 21.4824 13.1973 21.4824 17.0528 17.5528C20.9824 13.6973 20.9824 7.32122 17.0528 3.39162C13.1973 -0.463873 6.82122 -0.463873 2.89162 3.39162ZM6.15381 6.65381C4.59678 8.13664 4.59678 10.6576 6.15381 12.2142C7.63664 13.6971 10.1576 13.6971 11.7142 12.2142C13.1971 10.6572 13.1971 8.13642 11.7142 6.65381C10.1572 5.09678 7.63642 5.09678 6.15381 6.65381ZM12.1591 13.6233C10.0089 15.2544 7.04308 15.0321 5.1896 13.1785C3.11365 11.1025 3.11365 7.76616 5.1896 5.69004C7.26555 3.61409 10.6019 3.61409 12.678 5.69004C14.5316 7.54365 14.754 10.5093 13.1229 12.6595L16.1627 15.6994C16.8301 16.2925 15.7919 17.3305 15.1988 16.6633L12.1591 13.6233Z" fill="#5E5E5E"/>
-        </svg>
+        <img src={searchImg} alt="Back"/>
     )
 }
 
@@ -44,17 +45,17 @@ export function ActionButton() {
 
 export function LeftArrowButton() {
     return(
-        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="18" viewBox="0 0 9 18" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.768944 9.64988C0.596657 9.47759 0.5 9.24418 0.5 9.00065C0.5 8.75712 0.596819 8.52371 0.768944 8.35142C2.42664 6.69373 6.77848 2.34188 8.10832 1.01204C8.17401 0.946353 8.27262 0.926792 8.35836 0.962326C8.44409 0.997859 8.5 1.08148 8.5 1.17422L8.5 4.23106C8.5 4.3745 8.44605 4.51256 8.34874 4.61802C7.66074 5.36455 4.83778 8.42741 4.3744 8.93009C4.33789 8.96986 4.33789 9.0305 4.3744 9.07027C4.83778 9.57312 7.66074 12.6358 8.34874 13.3823C8.44588 13.4878 8.5 13.6259 8.5 13.7693L8.5 16.8261C8.5 16.9189 8.44409 17.0025 8.35836 17.038C8.27262 17.0736 8.17401 17.0538 8.10832 16.9883L0.768944 9.64895L0.768944 9.64988Z" fill="#808080"/>
-        </svg>
+        <button className='small__button'>
+            <img src={leftArrowImg} alt="Back"/>
+        </button>
     )
 }
 
 export function RightArrowButton() {
     return(
-        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="18" viewBox="0 0 9 18" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.23106 8.35012C8.40334 8.52241 8.5 8.75582 8.5 8.99935C8.5 9.24288 8.40318 9.47629 8.23106 9.64858C6.57336 11.3063 2.22152 15.6581 0.89168 16.988C0.825993 17.0536 0.727379 17.0732 0.641643 17.0377C0.555906 17.0021 0.5 16.9185 0.5 16.8258L0.5 13.7689C0.5 13.6255 0.553953 13.4874 0.651261 13.382C1.33926 12.6354 4.16222 9.57259 4.6256 9.06991C4.66211 9.03014 4.66211 8.9695 4.6256 8.92973C4.16222 8.42688 1.33926 5.36419 0.651261 4.61765C0.554116 4.5122 0.5 4.37414 0.5 4.2307L0.5 1.17386C0.5 1.08111 0.555906 0.997492 0.641643 0.961962C0.727379 0.926429 0.825993 0.946151 0.89168 1.01168L8.23106 8.35105L8.23106 8.35012Z" fill="white"/>
-        </svg>
+        <button className='small__button'>
+            <img src={rightArrowImg} alt="Back"/>
+        </button>
     )
 }
 
@@ -68,7 +69,7 @@ export function BackButton() {
 
 export function NavigationButton() {
     return (
-        <button className='small__button'>
+        <button className='small__button nav__button'>
             <img src={navigationImg} alt="Navigation"/>
         </button>
     )

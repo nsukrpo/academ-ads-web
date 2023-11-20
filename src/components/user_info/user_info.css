@@ -1,0 +1,12 @@
+.user__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 17px;
+    margin-right: 35px;
+}
+
+.nav__button {
+    left: 0px;
+}

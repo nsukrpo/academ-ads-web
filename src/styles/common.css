@@ -14,17 +14,43 @@ body {
     flex-direction: row;
     justify-content: flex-start;
 }
+.column {
+    display: flex;
+    flex-direction: column;
+}
 
 .logo {
     display: flex;
 }
-
 .logo.auth {
     padding: 20px 25px;
 }
 
 .vertical__line {
     width: 3px;
-    height: 920.003px;
+    height: auto;
     background: #CBF265;
+}
+.horizontal__line {
+    height: 1px; 
+    background-color: #CBF265;
+    border: 0px;
+    margin-top: 30px;
+}
+
+.arrows{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.action__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--grayscale-nickel, #737373);
+    background: var(--grayscale-nickel, #737373);
 }

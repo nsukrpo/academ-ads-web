@@ -15,7 +15,7 @@ function Infobar() {
                         <div className="heading__C2 secondary">xyz@gmail.com</div>
                     </div>
                 </div>
-                <hr className="info__line"/>
+                <hr className="horizontal__line"/>
             </div>
         </div>
     )

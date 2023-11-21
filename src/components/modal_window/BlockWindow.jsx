@@ -1,5 +1,6 @@
 import './modal_window.css';
 import { DropdownButton } from '../elements/Buttons';
+import closeImg from './../../images/close.svg';
 
 export {BlockAdWindow, BlockUserWindow};
 
@@ -13,7 +14,12 @@ function BlockAdWindow() {
 
     return(
         <div className="modal__window">
-            <div className="heading__A2">Блокировка объявления</div>
+            <div className="row">
+                <div className="heading__A2">Блокировка объявления</div>
+                <button className='small__button close'>
+                    <img src={closeImg} alt="Close"/>
+                </button>
+            </div>
             <hr className="divider"/>
             
             <div className="block_config_column">
@@ -42,7 +48,12 @@ function BlockAdWindow() {
 function BlockUserWindow() {
     return(
         <div className="modal__window">
-            <div className="heading__A2">Блокировка пользователя Ivan</div>
+            <div className="row">
+                <div className="heading__A2">Блокировка пользователя Ivan</div>
+                <button className='small__button close'>
+                    <img src={closeImg} alt="Close"/>
+                </button>
+            </div>
             <hr className="divider"/>
             
             <div className="block_config_column">

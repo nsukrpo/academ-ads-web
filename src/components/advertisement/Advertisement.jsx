@@ -1,6 +1,8 @@
 import './advertisement.css';
 import './../../styles/text.css';
+import './../../styles/common.css';
 import AdTapbar from './AdTapbar';
+import { LeftArrowButton, RightArrowButton } from '../elements/Buttons';
 
 function Advertisement() {
     return (
@@ -9,8 +11,10 @@ function Advertisement() {
           
             <div className="ad__row">
                 <div className="ad__photos">
-                    <div className="right__arrow"/>
-                    <div className="left__arrow"/>
+                    <div className="arrows__row">
+                        <LeftArrowButton/>
+                        <RightArrowButton/>
+                    </div>
                 </div>
 
                 <div className="ad__info__column">

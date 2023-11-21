@@ -45,7 +45,7 @@ export function ActionButton() {
 
 export function LeftArrowButton() {
     return(
-        <button className='small__button'>
+        <button className='small__button left__arrow'>
             <img src={leftArrowImg} alt="Back"/>
         </button>
     )

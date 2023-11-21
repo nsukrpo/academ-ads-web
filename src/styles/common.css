@@ -19,7 +19,6 @@ body {
     max-height: 100%;
     position: relative;
     align-self: stretch;
-    
 }
 .column {
     display: flex;

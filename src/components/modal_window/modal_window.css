@@ -97,3 +97,8 @@
     border: 0.5px solid var(--grayscale-raisin-black, #262626);
     background: var(--grayscale-platinum, #E6E6E6);
 }
+
+.small__button.close {
+    position: absolute;
+    right: 0;
+}

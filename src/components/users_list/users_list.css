@@ -1,0 +1,50 @@
+.column.users {
+    gap: 32px;
+}
+
+.users__list__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filter__zone{
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filter{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    flex-shrink: 0;
+    width: auto;
+    gap: 50px;
+    border: 0.5px solid var(--grayscale-raisin-black, #262626);
+    background: var(--grayscale-platinum, #E6E6E6);
+}
+
+.filter.user__search {
+    width: 300px;
+}
+
+.table__row__item {
+    display: flex;
+}
+
+td {
+    text-align: center;
+}
+
+th{
+    border-top: 1px solid #CBF265;
+    border-bottom:1px solid #CBF265;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}

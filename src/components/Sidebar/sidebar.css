@@ -1,0 +1,25 @@
+.sidebar__column {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    border-radius: 15px;
+    background: #262626;
+    height: fit-content;
+}
+
+.sidebar__element{
+    display: flex;
+    height: 50px;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 10px;
+}
+
+.sidebar__element.active{
+    border-radius: 10px;
+    background: #7203FF;
+}

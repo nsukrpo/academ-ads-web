@@ -1,7 +1,7 @@
 import logoImg from './../../images/academ_ads_logo.svg'
 import './../../styles/common.css';
 import './../../styles/text.css';
-import './auth_screen.css';
+import './../styles/auth_screen.css';
 
 function AuthScreen() {
 

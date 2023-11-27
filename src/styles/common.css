@@ -3,6 +3,15 @@ body {
     background: var(--maincolor-secondary, #191919);
 }
 
+button {
+    cursor: pointer; 
+    outline: none; 
+    transition: 0.2s all; 
+}
+.button:active{
+    transform: scale(0.98);
+}
+
 .container {
     max-width: 100%;
     max-height: 100%;

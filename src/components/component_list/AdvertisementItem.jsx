@@ -1,9 +1,10 @@
 import './component.css';
 import './../../styles/text.css';
+import { Link } from 'react-router-dom';
 
 function AdvertisementItem() {
     return (
-        <div className="advertisement">
+        <Link className="advertisement__item" to="/advertisement/id">
             <div className="row">
                 <div className="component__content">
                     <div className="heading__A2 salad">Заголовок объявления</div>
@@ -12,7 +13,7 @@ function AdvertisementItem() {
                 </div>
                 <div className="ad__preview"/>
             </div>
-        </div>
+        </Link>
     )
 }
 

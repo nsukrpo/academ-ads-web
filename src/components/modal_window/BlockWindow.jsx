@@ -1,10 +1,25 @@
 import './modal_window.css';
 import { DropdownButton } from '../elements/Buttons';
 import closeImg from './../../images/close.svg';
+import { useState } from 'react';
 
-export {BlockAdWindow, BlockUserWindow};
+export {BlockAdWindow, BlockUserWindow, useModal};
 
-function BlockAdWindow() {
+const useModal = () => {
+    const [isShowing, setIsShowing] = useState(false)
+    
+    function toggle() {
+        setIsShowing(!isShowing);
+    }
+
+    return [ isShowing, toggle ];
+}
+
+const BlockAdWindow = ({ show, onCloseButtonClick }) => {
+    if (!show){
+        return null;
+    }
+    
     const reasons_list = [
         "Нецензурная лексика",
         "Порнографические материалы",
@@ -12,11 +27,12 @@ function BlockAdWindow() {
         "Обман и мошенничество"
     ]
 
+
     return(
         <div className="modal__window">
             <div className="row">
                 <div className="heading__A2">Блокировка объявления</div>
-                <button className='small__button close'>
+                <button className='small__button close' onClick={onCloseButtonClick}>
                     <img src={closeImg} alt="Close"/>
                 </button>
             </div>
@@ -38,8 +54,10 @@ function BlockAdWindow() {
             
             <hr className="divider"/>
             <div className="buttons__row">
-                <div className="button cancel heading__B1 black">ОТМЕНА</div>
-                <div className="button block heading__B1">ЗАБЛОКИРОВАТЬ</div>
+                <button className="button cancel heading__B1 black" onClick={onCloseButtonClick}>
+                    ОТМЕНА
+                </button>
+                <button className="button block heading__B1">ЗАБЛОКИРОВАТЬ</button>
             </div>
         </div>
     )

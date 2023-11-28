@@ -1,5 +1,5 @@
 import Header from "../components/header/Header";
-import Sidebar from "../components/sidebar/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar";
 import Infobar from "../components/infobar/Infobar";
 import ComponentList from '../components/component_list/ComponentList';
 import AdvertisementItem from '../components/component_list/AdvertisementItem';

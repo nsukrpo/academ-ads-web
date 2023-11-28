@@ -57,7 +57,7 @@
     gap: 50px;
 }
 
-.button {
+.button__modal {
     display: flex;
     width: 250px;
     height: 50px;
@@ -65,12 +65,18 @@
     align-items: center;
     gap: 10px;
     border-radius: 8px;   
+    cursor: pointer; 
+    outline: none; 
+    transition: 0.2s all; 
 }
-.button.block {
+.button__modal:active{
+    transform: scale(0.98);
+}
+.button__modal.block {
     border: 1px solid var(--maincolor-primary, #7203FF);
     background: var(--maincolor-primary, #7203FF);
 }
-.button.cancel {
+.button__modal.cancel {
     border: 1px solid var(--grayscale-gray, #808080);
     background: var(--grayscale-white, #FFF);
 }
@@ -98,7 +104,7 @@
     background: var(--grayscale-platinum, #E6E6E6);
 }
 
-.small__button.close {
+.button.small.close {
     position: absolute;
     right: 0;
 }

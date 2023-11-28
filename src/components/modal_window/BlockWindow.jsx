@@ -1,6 +1,5 @@
 import './modal_window.css';
-import { DropdownButton } from '../elements/Buttons';
-import closeImg from './../../images/close.svg';
+import { DropdownButton, CloseButton } from '../elements/Buttons';
 import { useState } from 'react';
 
 export {BlockAdWindow, BlockUserWindow, useModal};
@@ -32,9 +31,7 @@ const BlockAdWindow = ({ show, onCloseButtonClick }) => {
         <div className="modal__window">
             <div className="row">
                 <div className="heading__A2">Блокировка объявления</div>
-                <button className='small__button close' onClick={onCloseButtonClick}>
-                    <img src={closeImg} alt="Close"/>
-                </button>
+                <CloseButton onClick={onCloseButtonClick}/>
             </div>
             <hr className="divider"/>
             
@@ -54,10 +51,10 @@ const BlockAdWindow = ({ show, onCloseButtonClick }) => {
             
             <hr className="divider"/>
             <div className="buttons__row">
-                <button className="button cancel heading__B1 black" onClick={onCloseButtonClick}>
+                <button className="button__modal cancel heading__B1 black" onClick={onCloseButtonClick}>
                     ОТМЕНА
                 </button>
-                <button className="button block heading__B1">ЗАБЛОКИРОВАТЬ</button>
+                <button className="button__modal block heading__B1">ЗАБЛОКИРОВАТЬ</button>
             </div>
         </div>
     )
@@ -68,9 +65,7 @@ function BlockUserWindow() {
         <div className="modal__window">
             <div className="row">
                 <div className="heading__A2">Блокировка пользователя Ivan</div>
-                <button className='small__button close'>
-                    <img src={closeImg} alt="Close"/>
-                </button>
+                <CloseButton/>
             </div>
             <hr className="divider"/>
             
@@ -85,8 +80,8 @@ function BlockUserWindow() {
             
             <hr className="divider"/>
             <div className="buttons__row">
-                <div className="button cancel heading__B1 black">ОТМЕНА</div>
-                <div className="button block heading__B1">ЗАБЛОКИРОВАТЬ</div>
+                <div className="button__modal cancel heading__B1 black">ОТМЕНА</div>
+                <div className="button__modal block heading__B1">ЗАБЛОКИРОВАТЬ</div>
             </div>
         </div>
     )

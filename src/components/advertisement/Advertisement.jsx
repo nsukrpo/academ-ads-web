@@ -1,21 +1,44 @@
 import './advertisement.css';
 import './../../styles/text.css';
 import './../../styles/common.css';
-import AdTapbar from './AdTapbar';
-import { LeftArrowButton, RightArrowButton } from '../elements/Buttons';
+import { BlockAdWindow, useModal } from '../modal_window/BlockWindow';
+import Carousel from '../elements/Carousel';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Advertisement() {
+export default function Advertisement() {
+    const [adData, setAdData] = useState({
+        name: "Заголовок",
+        status: "status1",
+        reason: "-",
+    })
+    const [ isShowingModal, toggleModal ] = useModal();
+    let navigate = useNavigate();
+
+    useEffect(()=>{
+        console.log(adData)
+    }, [adData])
+
+    const onPostButtonClick = (e) => {
+        setAdData(prevAdData => {
+            let newAdData = { ...prevAdData }
+            newAdData.status = "ADVERTISEMENT_CONTENT_MODERATION_PASSED"
+            return {newAdData}
+        })
+        navigate("/moderation")
+    };
+
     return (
         <div className="advertisement">
             <div className="heading__A2">Новое объявление</div>
           
             <div className="ad__row">
-                <div className="ad__photos">
-                    <div className="arrows__row">
-                        <LeftArrowButton/>
-                        <RightArrowButton/>
-                    </div>
-                </div>
+                <Carousel>
+                    <div className="ad__photo photo1">photo1</div>
+                    <div className="ad__photo photo2">photo2</div>
+                    <div className="ad__photo photo3">photo3</div>
+                    <div className="ad__photo photo4">photo4</div>
+                </Carousel>
 
                 <div className="ad__info__column">
                     <div className="heading__A2">Заголовок объявления</div>
@@ -29,9 +52,16 @@ function Advertisement() {
             <div className="heading__A2">Описание</div>
             <div className="ad__description heading__D1 nunito">Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание</div>
 
-            <AdTapbar/>
+            <div className="tapbar">
+                <button className="button action heading__C2" onClick={(e)=>onPostButtonClick(e)}>ОПУБЛИКОВАТЬ</button>
+                <button className="button action heading__C2" onClick={toggleModal}>ЗАБЛОКИРОВАТЬ</button>
+            </div>
+            <BlockAdWindow
+                show={isShowingModal}
+                onCloseButtonClick={toggleModal}
+                advertisementData={adData}
+            />
         </div>
     )
 }
 
-export default Advertisement;

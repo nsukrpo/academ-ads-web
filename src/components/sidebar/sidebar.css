@@ -17,6 +17,12 @@
     gap: 10px;
     align-self: stretch;
     border-radius: 10px;
+    cursor: pointer; 
+    outline: none; 
+    transition: 0.2s all; 
+}
+.sidebar__element:active{
+    transform: scale(0.98);
 }
 
 .sidebar__element.active{

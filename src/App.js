@@ -1,26 +1,49 @@
-import Header from "./components/header/Header";
-import Sidebar from "./components/sidebar/Sidebar";
-import UsersList from "./components/users_list/UsersList";
-import Infobar from "./components/infobar/Infobar";
-import { BlockAdWindow, BlockUserWindow } from "./components/modal_window/BlockWindow";
-import Advertisement from "./components/advertisement/Advertisement";
+import { Routes, Route } from "react-router-dom";
+import Moderation  from "./screens/ModerationScreen";
+import AdvertisementScreen from "./screens/AdvertisementScreen";
+export default App;
 
 function App() {
   return (
     <div className="App">
       <div className="container">
-        <Header/>
-        <div className="row">
-          <Sidebar/>
-          <div className="vertical__line"/>
-          <div className="column">
-            <Infobar/>
-            <Advertisement/>
-          </div>
-        </div>
+        <Routes>
+          <Route path="/auth" element={<Auth />}></Route>
+          <Route path="/moderation" element={<Moderation />} ></Route>
+          <Route path="/users" element={<Users />}></Route>
+          <Route path="/resolved-ads" element={<ResolvedAds />}></Route>
+          <Route path="/strikes" element={<Strikes />}></Route>
+          <Route path="/blockings" element={<Blockings />}></Route>
+          <Route path="/advertisement/id" element={<AdvertisementScreen />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+
       </div>
     </div>
   );
 }
 
-export default App;
+export const Auth = () => {
+  
+}
+
+
+export const Users = () => {
+
+}
+
+export const ResolvedAds = () => {
+
+}
+
+export const Strikes = () => {
+
+}
+
+export const Blockings = () => {
+
+}
+
+export const NotFound = () => {
+  return <div>This is a 404 page</div>
+}

@@ -20,15 +20,25 @@
     flex-shrink: 0;
 }
 
-.ad__photos {
-    width: 499px;
-    height: 498px;
-    flex-shrink: 0;
-    border-radius: 15px;
+.ad__photo {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--othercolor-hover-red, #0BCE83);
+    user-select: none;
+    border-radius: 15px;
+}
+
+.ad__photo.photo1 {
+    background-color: blueviolet;
+}
+.ad__photo.photo2 {
+    background-color: chocolate;
+}
+.ad__photo.photo3 {
+    background-color: darkgreen;
+}
+.ad__photo.photo4 {
+    background-color: gold;
 }
 
 .ad__info__column {

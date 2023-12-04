@@ -55,6 +55,40 @@
     background: var(--grayscale-nickel, #737373);
 }
 
+.ban_strike__content_container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  padding: 10px;
+}
+.ban_strike__content_item_label {
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+.ban_strike__content_item_value {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.strike {
+    max-width: 560px;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: var(--grayscale-nickel, #737373);
+}
+
+.ban {
+    max-width: 560px;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: var(--grayscale-nickel, #737373);
+}
+
 .component__content {
     display: flex;
     max-width: 632px;

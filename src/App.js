@@ -1,5 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Moderation  from "./screens/ModerationScreen";
+import Strikes from "./screens/StrikesScreen";
+import Blockings from "./screens/BlockingsScreen";
+import ResolvedAds from "./screens/ResolvedAdsScreen";
 import AdvertisementScreen from "./screens/AdvertisementScreen";
 export default App;
 
@@ -29,18 +32,6 @@ export const Auth = () => {
 
 
 export const Users = () => {
-
-}
-
-export const ResolvedAds = () => {
-
-}
-
-export const Strikes = () => {
-
-}
-
-export const Blockings = () => {
 
 }
 

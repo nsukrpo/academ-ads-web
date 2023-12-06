@@ -4,8 +4,8 @@ import Infobar from "../components/infobar/Infobar";
 import ComponentList from '../components/component_list/ComponentList';
 import AdvertisementItem from '../components/component_list/AdvertisementItem';
 
-export default function Moderation () {
-  const title = 'Объявления, ожидающие рассмотрения'
+export default function ResolvedAds () {
+  const title = 'Закрытые объявления'
   
   return (
     <div>

@@ -2,10 +2,10 @@ import Header from "../components/header/Header";
 import Sidebar from "../components/sidebar/Sidebar";
 import Infobar from "../components/infobar/Infobar";
 import ComponentList from '../components/component_list/ComponentList';
-import AdvertisementItem from '../components/component_list/AdvertisementItem';
+import BanItem from '../components/component_list/BanItem';
 
-export default function Moderation () {
-  const title = 'Объявления, ожидающие рассмотрения'
+export default function Blockings () {
+  const title = 'Список блокировок'
   
   return (
     <div>
@@ -15,7 +15,7 @@ export default function Moderation () {
           <div className="vertical__line"/>
           <div className="column">
             <Infobar/>
-            { ComponentList(title, AdvertisementItem)}
+            { ComponentList(title, BanItem)}
           </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ function Sidebar() {
                     <Link to="/users" className = "heading__B1 nav__text">Пользователи</Link>
                 </li>
                 <li className="sidebar__element">
-                    <Link to="resolved-ads" className = "heading__B1 nav__text">Рассмотренные объявления</Link>
+                    <Link to="/resolved-ads" className = "heading__B1 nav__text">Рассмотренные объявления</Link>
                 </li>
                 <li className="sidebar__element">
                     <Link to="/strikes" className = "heading__B1 nav__text">Предупреждения</Link>

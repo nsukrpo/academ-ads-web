@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 function Sidebar() {
     return (
             <div className="sidebar__column">
-                <li className="sidebar__element">
-                    <Link to="/users/id" className = "heading__B1 nav__text">Профиль</Link>
-                </li>
                 <li className="sidebar__element active">
                     <Link to="/moderation" className = "heading__B1 nav__text">Модерация</Link>
                 </li>

@@ -15,7 +15,7 @@ export default function Blockings () {
           <div className="vertical__line"/>
           <div className="column">
             <Infobar/>
-            { ComponentList(title, BanItem)}
+            <ComponentList title={title} itemFunc={BanItem}/>
           </div>
         </div>
     </div>

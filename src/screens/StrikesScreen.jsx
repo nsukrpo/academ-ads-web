@@ -15,7 +15,7 @@ export default function Strikes () {
           <div className="vertical__line"/>
           <div className="column">
             <Infobar/>
-            { ComponentList(title, StrikeItem)}
+            <ComponentList title={title} itemFunc={StrikeItem}/>
           </div>
         </div>
     </div>

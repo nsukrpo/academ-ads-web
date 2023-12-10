@@ -34,6 +34,11 @@
     text-align: center;
     align-items: center;
     background: var(--grayscale-raisin-black, #262626);
+    cursor: pointer;
+    transition: 0.2s all; 
+}
+.user__nav__item:active{
+    transform: scale(0.98);
 }
 .user__nav__item.active{
     background: var(--grayscale-nickel, #737373);

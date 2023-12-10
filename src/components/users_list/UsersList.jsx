@@ -1,13 +1,15 @@
 import './users_list.css';
 import './../../styles/text.css'
 import './../../styles/common.css'
-import {SearchButton, DropdownButton, ArrowsButton, ActionButton} from '../elements/Buttons';
+import {SearchButton, DropdownButton, LeftArrowButton, RightArrowButton, ActionButton} from '../elements/Buttons';
 import Pagination from '../elements/Pagination';
+import { Link } from 'react-router-dom';
+import { BlockUserWindow, useModal } from '../modal_window/BlockUserWindow';
+import { useEffect, useState } from 'react';
 
 export default UsersList;
 
 function UsersList() {
-
     return(
         <div className="column users">
             <div className="users__list__header">
@@ -30,6 +32,9 @@ function UsersList() {
 
 
 function UsersTable() {
+    const [ isShowingModal, toggleModal ] = useModal();
+    const [ action, setAction ] = useState(()=>{});
+
     const thead_names = [
         "НИКНЕЙМ",
         "КОЛИЧЕСТВО ОТКЛОНЕННЫХ ОБЪЯВЛЕНИЙ",
@@ -46,11 +51,24 @@ function UsersTable() {
         ban_reason: "???",
         blocks_num: 0,
         ads_num: 3,
-        status: "Не заблокирован",
+        status: "ACTIVE",
         action: "Заблокировать"
     }
 
     const arr = [user, user, user, user, user, user, user]
+
+    const onUnblockAction = () => {
+    }
+
+    useEffect(()=>{
+        if (user.status == "ACTIVE") {
+            setAction(()=>{
+                return toggleModal
+            })
+        } else if (user.status == "EXPIRED") {
+            setAction(onUnblockAction)
+        }
+    }, [user.status])  
 
     return(
         <table className='users__table'>
@@ -67,22 +85,29 @@ function UsersTable() {
                 {
                     arr.map((user) => (
                         <tr>
-                            <td className='heading__C1'>{user.name}</td>
+                            <td>
+                                <Link className='heading__C1' to="/users/id">{user.name}</Link>
+                            </td>
                             <td className='heading__C1'>{user.blocked_ads_num}</td>
                             <td className='heading__C1'>{user.ban_reason}</td>
                             <td className='heading__C1'>{user.blocks_num}</td>
                             <td className='heading__C1'>{user.ads_num}</td>
                             <td className='heading__C1'>{user.status}</td>
-                            <td className='heading__C1'><ActionButton/></td>
+                            <td className='heading__C1'><ActionButton onClick={action} option={user.action}/></td>
                         </tr>
                     ))
                 }
             </tbody>
+            <BlockUserWindow
+                show={isShowingModal}
+                onCloseButtonClick={toggleModal}
+                user={user}
+            />
         </table>
     )
 }
  
-function DropdownFilters() {
+export function DropdownFilters() {
     const filter_dropdown_options = [
         "причина бана",
         "статус"
@@ -91,7 +116,6 @@ function DropdownFilters() {
     return filter_dropdown_options.map((val) => (
         <div className="filter">
             <div className="heading__D1 nunito grey">{val}</div>
-            <ArrowsButton/>
         </div>
     ))
 }

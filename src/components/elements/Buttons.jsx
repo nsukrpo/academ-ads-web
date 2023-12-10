@@ -8,25 +8,25 @@ import leftArrowImg from './../../images/left_arrow.svg'
 import optionButtonImg from './../../images/option_button.svg'
 import closeImg from './../../images/close.svg';
 
-export function SearchButton() {
+export function SearchButton({onClick}) {
     return(
-        <img src={searchImg} alt="Search"/>
+        <img src={searchImg} alt="Search" onClick={onClick}/>
     )
 }
 
-export function DropdownButton() {
+export function DropdownButton({onClick}) {
     return(
-        <button className='button small '>
+        <button className='button small ' onClick={onClick}>
             <img src={optionButtonImg} alt="Option"/>
         </button>
     )
 }
 
-export function ActionButton() {
+export function ActionButton({onClick, option}) {
     const options = ["ЗАБЛОКИРОВАТЬ", "РАЗБЛОКИРОВАТЬ"]
 
     return(
-        <div className="button action">{options[0]}</div>
+        <div className="button action" onClick={onClick}>{option}</div>
     )
 }
 
@@ -46,17 +46,17 @@ export function RightArrowButton({className, onClick}) {
     )
 }
 
-export function BackButton() {
+export function BackButton({onClick}) {
     return (
-        <button className='button small '>
+        <button className='button small ' onClick={onClick}>
             <img src={backArrowImg} alt="Back"/>
         </button>
     )
 }
 
-export function NavigationButton() {
+export function NavigationButton({onClick}) {
     return (
-        <button className='button small nav__button'>
+        <button className='button small nav__button' onClick={onClick}>
             <img src={navigationImg} alt="Navigation"/>
         </button>
     )

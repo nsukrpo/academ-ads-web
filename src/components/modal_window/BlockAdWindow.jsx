@@ -1,9 +1,9 @@
 import './modal_window.css';
-import { DropdownButton, CloseButton } from '../elements/Buttons';
+import { CloseButton } from '../elements/Buttons';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export {BlockAdWindow, BlockUserWindow, useModal};
+export {BlockAdWindow, useModal};
 
 const useModal = () => {
     const [isShowing, setIsShowing] = useState(false)
@@ -100,34 +100,3 @@ const BlockAdWindow = ({ show, onCloseButtonClick, advertisementData }) => {
         </div>
     )
 }
-
-function BlockUserWindow() {
-    return(
-        <div className="shadow__window">
-            <div className="modal__window">
-                <div className="row">
-                    <div className="heading__A2">Блокировка пользователя Ivan</div>
-                    <CloseButton/>
-                </div>
-                <hr className="divider"/>
-                
-                <div className="block_config_column">
-                    <div className="heading__B1">Укажите причину блокировки:</div>
-                    <div className="reason__input heading__D2 nunito black">...</div>
-                    <div className="time__dropdown heading__D2 nunito black">
-                        Длительность блокировки
-                        <DropdownButton/>
-                    </div>
-                </div>
-                
-                <hr className="divider"/>
-                <div className="buttons__row">
-                    <div className="button__modal cancel heading__B1 black">ОТМЕНА</div>
-                    <div className="button__modal block heading__B1">ЗАБЛОКИРОВАТЬ</div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-

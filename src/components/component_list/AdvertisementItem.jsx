@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function AdvertisementItem() {
     return (
-        <Link className="advertisement__item" to="/advertisement/id">
+        <Link className="advertisement__item" to="/advertisement/id" style={{ textDecoration: 'none' }}>
             <div className="row">
                 <div className="component__content">
                     <div className="heading__A2 salad">Заголовок объявления</div>

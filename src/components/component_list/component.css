@@ -12,7 +12,7 @@
     height: auto;
     flex-shrink: 0;
     border-radius: 15px;
-    background: var(--grayscale-nickel, #737373);
+    background: #737373;
     cursor: pointer; 
     outline: none; 
     transition: 0.2s all; 

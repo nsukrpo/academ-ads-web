@@ -63,6 +63,10 @@
     background-color: #7203FF;
     text-emphasis-color: #FFF;
 }
+.reason__element.selected{
+    background-color: #7203FF;
+    text-emphasis-color: #FFF;
+}
 
 .buttons__row {
     display: flex;

@@ -26,7 +26,6 @@ function UserProfile() {
                         </div>
                     </div>
                 </div>
-                <NavigationButton/>
             </div>
             <hr className='horizontal__line'/>
             
@@ -35,7 +34,11 @@ function UserProfile() {
                 {ComponentList("Заблокированные объявления", BlockedAdvertisement)}
             </div>
 
-            <UserProfileTapbar/>
+            <div className="tapbar">
+                <button className="button action heading__C2">РАЗБЛОКИРОВАТЬ</button>
+                <button className="button action heading__C2" onClick={toggleModal}>ЗАБЛОКИРОВАТЬ</button>
+                <button className="button action heading__C2">СЛЕДУЮЩИЙ</button>
+            </div>
         </div>
     )
 }

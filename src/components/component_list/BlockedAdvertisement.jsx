@@ -3,7 +3,7 @@ import './../../styles/text.css';
 
 function BlockedAdvertisement() {
     return (
-        <div className="advertisement">
+        <div className="advertisement__item">
             <div className="row">
                 <div className="component__content">
                     <div className="heading__A2 salad">Заголовок объявления</div>

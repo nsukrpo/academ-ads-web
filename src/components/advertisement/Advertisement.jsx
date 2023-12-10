@@ -1,7 +1,7 @@
 import './advertisement.css';
 import './../../styles/text.css';
 import './../../styles/common.css';
-import { BlockAdWindow, useModal } from '../modal_window/BlockWindow';
+import { BlockAdWindow, useModal } from '../modal_window/BlockAdWindow';
 import Carousel from '../elements/Carousel';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

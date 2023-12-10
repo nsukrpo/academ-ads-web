@@ -4,6 +4,8 @@ import Strikes from "./screens/StrikesScreen";
 import Blockings from "./screens/BlockingsScreen";
 import ResolvedAds from "./screens/ResolvedAdsScreen";
 import AdvertisementScreen from "./screens/AdvertisementScreen";
+import UserListScreen from "./screens/UserListScreen";
+import { UserProfileScreen } from "./screens/UserProfileScreen";
 export default App;
 
 function App() {
@@ -13,7 +15,8 @@ function App() {
         <Routes>
           <Route path="/auth" element={<Auth />}></Route>
           <Route path="/moderation" element={<Moderation />} ></Route>
-          <Route path="/users" element={<Users />}></Route>
+          <Route path="/users" element={<UserListScreen />}></Route>
+          <Route path="/users/id" element={<UserProfileScreen />}></Route>
           <Route path="/resolved-ads" element={<ResolvedAds />}></Route>
           <Route path="/strikes" element={<Strikes />}></Route>
           <Route path="/blockings" element={<Blockings />}></Route>
@@ -28,11 +31,6 @@ function App() {
 
 export const Auth = () => {
   
-}
-
-
-export const Users = () => {
-
 }
 
 export const NotFound = () => {

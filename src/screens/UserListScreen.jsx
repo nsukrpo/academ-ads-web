@@ -1,5 +1,5 @@
 import Header from "../components/header/Header"
-import Sidebar from "../components/sidebar/Sidebar"
+import Sidebar, { pages } from "../components/sidebar/Sidebar"
 import UsersList from "../components/users_list/UsersList"
 
 
@@ -8,7 +8,7 @@ export default function UserListScreen() {
         <div>
           <Header/>
             <div className="row">
-              <Sidebar/>
+              <Sidebar curPage={pages.users}/>
               <div className="vertical__line"/>
               <div className="column">
                 <UsersList/>

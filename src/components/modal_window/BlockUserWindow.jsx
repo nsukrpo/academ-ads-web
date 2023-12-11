@@ -1,9 +1,22 @@
 import './modal_window.css';
-import { DropdownButton, CloseButton } from '../elements/Buttons';
+import { CloseButton } from '../elements/Buttons';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Dropdown from '../elements/Dropdown';
 
 export { useModal, BlockUserWindow }
+
+const reasons_options = [
+    {value: "STRIKES_LIMIT", label: "Превышено количество предупреждений"},
+    {value: "GROSS_VIOLATION", label: "Сильное нарушение"},
+    {value: "NONE", label: "-"},
+]
+
+const duration_options = [
+    {value: "DAY", label: "Сутки"},
+    {value: "WEEK", label: "Неделя"},
+    {value: "MONTH", label: "Месяц"},
+    {value: "FOREVER", label: "Навсегда"},
+]
 
 const useModal = () => {
     const [isShowing, setIsShowing] = useState(false)
@@ -23,44 +36,48 @@ const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
         blocks_num: 0,
         ads_num: 0,
         status: "",
-        action: ""
+        action: "",
+        duration: ""
     })
-    const [selectedReason, setSelectedReason] = useState("-")
+    const [selectedReason, setSelectedReason] = useState("")
+    const [selectedDuration, setSelectedDuration] = useState("")
 
     useEffect(()=>{
         setUserData(user)
     }, [user])
 
+    useEffect(()=>{
+        /*alert(
+            "status: " + userData.status +
+            "\nreason: " + userData.ban_reason + " " + selectedReason + 
+            "\nduration: " + userData.duration + " " + selectedDuration
+        )*/
+    }, [userData])
+
     if (!show){
         return null;
     }
-
-    const reasons_list = [
-        "Нецензурная лексика",
-        "Порнографические материалы",
-        "Насилие",
-        "Обман и мошенничество"
-    ]
-
-    const duration_list = [
-        "Сутки",
-        "Неделя",
-        "Месяц",
-        "Навсегда"
-    ]
-
-    const onReasonClick = (event) => {
-        setSelectedReason(event.target.title);
-        console.log(selectedReason)
-    }
     
+    const getReasonValue = () => {
+        return selectedReason ? reasons_options.find(opt => opt.value === selectedReason): '' 
+    }
+    const getDurationValue = () => {
+        return selectedDuration ? duration_options.find(opt => opt.value === selectedDuration): '' 
+    }
+    const onReasonSelect = (newValue) => {
+        setSelectedReason(newValue.value)
+    }
+    const onDurationSelect = (newValue) => {
+        setSelectedDuration(newValue.value)
+    }
+
     const onBlockButtonClick = () => {
-        setUserData((prevData) => {
-            let newData = {...prevData}
-            newData.status = "EXPIRED"
-            newData.ban_reason = selectedReason
-            return {newData}
-        })
+        setUserData(prevData => ({
+            ...prevData,
+            status: "EXPIRED",
+            ban_reason: selectedReason,
+            duration: selectedDuration
+        }))
         onCloseButtonClick()
     }
 
@@ -68,34 +85,25 @@ const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
         <div className="shadow__window">
             <div className="modal__window">
                 <div className="row">
-                    <div className="heading__A2">Блокировка пользователя Ivan</div>
+                    <div className="heading__A2">Блокировка пользователя {userData.name}</div>
                     <CloseButton onClick={onCloseButtonClick}/>
                 </div>
                 <hr className="divider"/>
                 
                 <div className="block_config_column">
                     <div className="heading__B1">Укажите причину блокировки:</div>
-
-                    {
-                        <div className="reasons_list">
-                        {
-                            reasons_list.map((reason, index) => (
-                                <div id='reasons-item' 
-                                    key = {index}
-                                    className='button reason__element heading__D1 nunito black'
-                                    onClick={onReasonClick}
-                                    title={selectedReason}
-                                >{reason}</div>
-                            ))
-                        }
-                        {/*dropdown for duations*/}
-                        </div>
-                    }
-
-                    <div className="time__dropdown heading__D2 nunito black">
-                        Длительность блокировки
-                        <DropdownButton/>
-                    </div>
+                    <Dropdown
+                        placeholder={"Причина"} 
+                        options={reasons_options} 
+                        onChange={onReasonSelect} 
+                        value={getReasonValue()}
+                    />
+                    <Dropdown 
+                        placeholder={"Длительность блокировки"} 
+                        options={duration_options}
+                        onChange={onDurationSelect} 
+                        value={getDurationValue()}
+                    />
                 </div>
                 
                 <hr className="divider"/>

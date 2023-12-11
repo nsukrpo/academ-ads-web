@@ -14,7 +14,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/auth" element={<Auth />}></Route>
-          <Route path="/moderation" element={<Moderation />} ></Route>
+          <Route path="/moderation" element={<Moderation/>} />
           <Route path="/users" element={<UserListScreen />}></Route>
           <Route path="/users/id" element={<UserProfileScreen />}></Route>
           <Route path="/resolved-ads" element={<ResolvedAds />}></Route>

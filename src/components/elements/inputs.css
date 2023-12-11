@@ -1,4 +1,4 @@
-.react-select {
+.input {
     display: flex;
     flex-direction: row;
     padding: 10px;
@@ -6,8 +6,13 @@
     align-items: center;
     border-radius: 15px;
     flex-shrink: 0;
-    min-width: 200px;
+    width: auto;
     gap: 50px;
     border: 0.5px solid var(--grayscale-raisin-black, #262626);
     background: var(--grayscale-platinum, #E6E6E6);
+}
+
+
+.input.user__search {
+    width: 300px;
 }

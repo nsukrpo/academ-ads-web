@@ -17,22 +17,7 @@ function UserProfile() {
     const [ isBlockedAds, setIsBlockedAds] = useState(true);
     const [ isBlockings, setIsBlockings] = useState(false);
     const [ isStrikes, setIsStrikes] = useState(false);
-    const [ title, setTitle ] = useState("")
-    const [ component, setComponent ] = useState(null)
     const [ isShowingModal, toggleModal ] = useModal();
-
-    useEffect(()=>{
-        if (isBlockedAds) {
-            setTitle("Заблокированные объявления")
-            setComponent(BlockedAdvertisement)
-        } else if (isBlockings) {
-            setTitle("Блокировки")
-            setComponent(BanItem)
-        } else if (isStrikes){
-            setTitle("Предупреждения")
-            setComponent(StrikeItem)
-        }
-    }, [isBlockedAds, isBlockings, isStrikes])
 
     let navigate = useNavigate()
 
@@ -51,13 +36,11 @@ function UserProfile() {
         setIsBlockings(false)
         setIsStrikes(false)
     }
-
     const onBlockingsClick = () => {
         setIsBlockedAds(false)
         setIsBlockings(true)
         setIsStrikes(false)
     }
-
     const onStrikesClick = () => {
         setIsBlockedAds(false)
         setIsBlockings(false)
@@ -111,7 +94,18 @@ function UserProfile() {
                     </div>
                     <hr className='divider'/>
                 </div>
-                <ComponentList title={title} itemFunc={component}/>
+                <ComponentList 
+                    title={
+                        isBlockedAds && "Заблокированные объявления" ||
+                        isBlockings && "Блокировки" ||
+                        isStrikes && "Предупреждения"
+                    } 
+                    item_func={
+                        isBlockedAds && BlockedAdvertisement ||
+                        isBlockings && BanItem ||
+                        isStrikes && StrikeItem
+                    }
+                />
             </div>
 
             <div className="tapbar">

@@ -1,30 +1,46 @@
 import './component.css';
 import './../../styles/text.css';
+import { useState } from 'react';
 
-function BanItem() {
+function BanItem({data}) {
+    const [user, setUser] = useState({
+            name: "",
+            regDate: "",
+            sales: 0,
+            purchaces: 0,
+    })
+    useEffect(()=>{
+        loadUser(data.user)
+    }, [])
+
+    const loadUser = async(id)=>{
+        const result = await axios.get(URL_PATH+'/user/'+id)
+        setUser(result.data)
+    }
+    
     return (
         <div className="ban">
             <div className="row">
                 <div className="component__content">
-                    <div className="heading__A2 salad">Блокировка от 01.01.1970</div>
+                    <div className="heading__A2 salad">Блокировка от {data.blockDate}</div>
                     <div className="ban_strike__content_container">
                         <div className="ban_strike__content_item_label">
                             <div className="heading__D1 nunito">Пользователь</div>
                         </div>
                         <div className="ban_strike__content_item_value">
-                            <div className="heading__D1 nunito">Petr</div>
+                            <div className="heading__D1 nunito">{user.name}</div>
                         </div>
                         <div className="ban_strike__content_item_label">
                             <div className="heading__D1 nunito">Длительность</div>
                         </div>
                         <div className="ban_strike__content_item_value">
-                            <div className="heading__D1 nunito">5 дней</div>
+                            <div className="heading__D1 nunito">{data.time} мин.</div>
                         </div>
                         <div className="ban_strike__content_item_label">
                             <div className="heading__D1 nunito">Причина</div>
                         </div>
                         <div className="ban_strike__content_item_value">
-                            <div className="heading__D1 nunito">Нагота в объявлениях</div>
+                            <div className="heading__D1 nunito">{data.reason}</div>
                         </div>
                     </div>
                 </div>

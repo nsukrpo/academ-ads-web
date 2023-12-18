@@ -8,18 +8,10 @@ import { BlockUserWindow, useModal } from '../modal_window/BlockUserWindow';
 import { useEffect, useState } from 'react';
 import Dropdown from '../elements/Dropdown';
 import { NumberInput, TextInput } from '../elements/Inputs';
+import { URL_PATH } from '../../Constants';
+
 
 export default UsersList;
-
-const thead_names = [
-    "НИКНЕЙМ",
-    "КОЛИЧЕСТВО ОТКЛОНЕННЫХ ОБЪЯВЛЕНИЙ",
-    "ПРИЧИНА БАНА",
-    "КОЛИЧЕСТВО БЛОКИРОВОК",
-    "КОЛИЧЕСТВО ОБЪЯВЛЕНИЙ", 
-    "СТАТУС",
-    "ДЕЙСТВИЯ"
-]
 
 const ban_reason_options = [
     {value: "STRIKES_LIMIT", label: "Превышено количество предупреждений"},
@@ -88,8 +80,10 @@ function UsersList() {
 
 
 function UsersTable() {
-    const [ isShowingModal, toggleModal ] = useModal();
-    const [ action, setAction ] = useState(()=>{});
+    const [users, setUsers] = useState([])
+    const [blockings, setBlockings] = useState([])
+    const [ads, setAds] = useState([])
+    const [blockAds, setBlockAds] = useState([])
 
     const [user, setUser] = useState({
         name: "Anna",
@@ -101,61 +95,49 @@ function UsersTable() {
         action: "Заблокировать"
     })
 
-    const arr = [user, user, user, user, user, user, user]
-
-    const onUnblockAction = () => {
-        setUser(prevUser => ({
-            ...prevUser,
-            status: "ACTIVE",
-            action: "Разблокировать"
-        }))
-    }
-
     useEffect(()=>{
-        if (user.status == "ACTIVE") {
-            setAction(()=>{
-                return toggleModal
-            })
-        } else if (user.status == "EXPIRED") {
-            setAction(()=>{
-                return onUnblockAction
-            })
-        }
-    }, [user.status])  
+        loadUsers()
+        users.forEach(element => {
+            loadBlockings(element.id)
+        });
+    }, [])
+
+    const loadUsers=async()=>{
+        const result=await axios.get(URL_PATH+'/user')
+        setUsers(result.data)
+    }
+    const loadBlockings = async(id)=>{
+        const result = await axios.get(URL_PATH+'/blocking?user_id='+id)
+        setBlockings(result.data)
+    }
+    const loadAds = async(id)=>{}
 
     return(
         <table className='users__table'>
             <thead>
                 <tr>
-                    {
-                        thead_names.map((val) => (
-                            <th className='nunito__12'>{val}</th>
-                        ))
-                    }
+                    <th className='nunito__12'>НИКНЕЙМ</th>
+                    <th className='nunito__12'>КОЛИЧЕСТВО ОТКЛОНЕННЫХ ОБЪЯВЛЕНИЙ</th>
+                    <th className='nunito__12'>КОЛИЧЕСТВО БЛОКИРОВОК</th>
+                    <th className='nunito__12'>КОЛИЧЕСТВО ОБЪЯВЛЕНИЙ</th>
+                    {/*<th className='nunito__12'>СТАТУС</th>*/}
                 </tr>
             </thead>
             <tbody>
                 {
-                    arr.map((user) => (
+                    users.map((user) => (
                         <tr>
                             <td>
-                                <Link className='heading__C1' to="/users/id">{user.name}</Link>
+                                <Link className='heading__C1' to={"/users/"+consumer.id}>{user.name}</Link>
                             </td>
-                            <td className='heading__C1'>{user.blocked_ads_num}</td>
-                            <td className='heading__C1'>{user.ban_reason}</td>
-                            <td className='heading__C1'>{user.blocks_num}</td>
-                            <td className='heading__C1'>{user.ads_num}</td>
-                            <td className='heading__C1'>{user.status}</td>
-                            <td className='heading__C1'><ActionButton onClick={action} option={user.action}/></td>
+                            <td className='heading__C1'>{blockAds.length}</td>
+                            <td className='heading__C1'>{blockings.length}</td>
+                            <td className='heading__C1'>{ads.length}</td>
+                            {/*<td className='heading__C1'>{user.status}</td>*/}
                         </tr>
                     ))
                 }
             </tbody>
-            <BlockUserWindow
-                show={isShowingModal}
-                onCloseButtonClick={toggleModal}
-                user={user}
-            />
         </table>
     )
 }

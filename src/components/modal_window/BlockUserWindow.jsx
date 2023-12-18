@@ -2,10 +2,12 @@ import './modal_window.css';
 import { CloseButton } from '../elements/Buttons';
 import { useEffect, useState } from 'react';
 import Dropdown from '../elements/Dropdown';
+import axios from 'axios';
+import { URL_PATH } from '../../Constants';
 
 export { useModal, BlockUserWindow }
 
-const reasons_options = [
+const user_reasons_options = [
     {value: "STRIKES_LIMIT", label: "Превышено количество предупреждений"},
     {value: "GROSS_VIOLATION", label: "Сильное нарушение"},
     {value: "NONE", label: "-"},
@@ -29,37 +31,20 @@ const useModal = () => {
 }
 
 const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
-    const [userData, setUserData] = useState({
-        name: "",
-        blocked_ads_num: 0,
-        ban_reason: "",
-        blocks_num: 0,
-        ads_num: 0,
-        status: "",
-        action: "",
-        duration: ""
+    const [blocking, setBlocking] = useState({
+        user_id: 0,
+        reason: "",
+        time_minutes: 0
     })
     const [selectedReason, setSelectedReason] = useState("")
     const [selectedDuration, setSelectedDuration] = useState("")
-
-    useEffect(()=>{
-        setUserData(user)
-    }, [user])
-
-    useEffect(()=>{
-        /*alert(
-            "status: " + userData.status +
-            "\nreason: " + userData.ban_reason + " " + selectedReason + 
-            "\nduration: " + userData.duration + " " + selectedDuration
-        )*/
-    }, [userData])
 
     if (!show){
         return null;
     }
     
     const getReasonValue = () => {
-        return selectedReason ? reasons_options.find(opt => opt.value === selectedReason): '' 
+        return selectedReason ? user_reasons_options.find(opt => opt.value === selectedReason): '' 
     }
     const getDurationValue = () => {
         return selectedDuration ? duration_options.find(opt => opt.value === selectedDuration): '' 
@@ -71,13 +56,14 @@ const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
         setSelectedDuration(newValue.value)
     }
 
-    const onBlockButtonClick = () => {
-        setUserData(prevData => ({
+    const onBlockButtonClick = async () => {
+        setBlocking(prevData => ({
             ...prevData,
-            status: "EXPIRED",
-            ban_reason: selectedReason,
-            duration: selectedDuration
+            user_id: user.id,
+            reason: selectedReason,
+            time_minutes: selectedDuration
         }))
+        await axios.post(URL_PATH+"/blocking", blocking)
         onCloseButtonClick()
     }
 
@@ -85,7 +71,7 @@ const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
         <div className="shadow__window">
             <div className="modal__window">
                 <div className="row">
-                    <div className="heading__A2">Блокировка пользователя {userData.name}</div>
+                    <div className="heading__A2">Блокировка пользователя {user.name}</div>
                     <CloseButton onClick={onCloseButtonClick}/>
                 </div>
                 <hr className="divider"/>
@@ -94,7 +80,7 @@ const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
                     <div className="heading__B1">Укажите причину блокировки:</div>
                     <Dropdown
                         placeholder={"Причина"} 
-                        options={reasons_options} 
+                        options={user_reasons_options} 
                         onChange={onReasonSelect} 
                         value={getReasonValue()}
                     />

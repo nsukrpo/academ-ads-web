@@ -26,8 +26,7 @@ function Header () {
                     </div>
 
                     <button className='profile_button' onClick = {onProfileClick}>
-                        <div className="heading__C2 green">admin</div>
-                        <img src={avatarImg} alt="Avatar"/>
+                        <div className="heading__C2 green">Выйти</div>
                     </button>
         </header>
     );

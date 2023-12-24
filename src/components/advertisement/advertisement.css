@@ -69,8 +69,8 @@
 
 .ad__category {
     display: flex;
-    height: 30px;
-    padding: 0px 5px;
+    height: auto;
+    padding: 5px 5px;
     justify-content: center;
     align-items: center;
     gap: 5px;

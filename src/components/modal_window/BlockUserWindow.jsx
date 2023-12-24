@@ -31,11 +31,6 @@ const useModal = () => {
 }
 
 const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
-    const [blocking, setBlocking] = useState({
-        user_id: 0,
-        reason: "",
-        time_minutes: 0
-    })
     const [selectedReason, setSelectedReason] = useState("")
     const [selectedDuration, setSelectedDuration] = useState("")
 
@@ -55,15 +50,21 @@ const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
     const onDurationSelect = (newValue) => {
         setSelectedDuration(newValue.value)
     }
+    const getMinutes = (duration) => {
+        switch (duration){
+            case "DAY": return 1440;
+            case "WEEK": return 10080;
+            case "MONTH": return 20000;
+            case "FOREVER": return 30000;
+        }
+    }
 
     const onBlockButtonClick = async () => {
-        setBlocking(prevData => ({
-            ...prevData,
+        await axios.post(URL_PATH+"/blocking", {
             user_id: user.id,
             reason: selectedReason,
-            time_minutes: selectedDuration
-        }))
-        await axios.post(URL_PATH+"/blocking", blocking)
+            time_minutes: getMinutes(selectedDuration)
+        })
         onCloseButtonClick()
     }
 

@@ -9,16 +9,21 @@
 }
 
 .advertisement__item {
+    width: 700px;
     height: auto;
     flex-shrink: 0;
     border-radius: 15px;
     background: #737373;
     cursor: pointer; 
     outline: none; 
-    transition: 0.2s all; 
+    transition: 0.2s all;
 }
 .advertisement__item:active{
     transform: scale(0.98);
+}
+
+.row.ad__item {
+  justify-content: space-between;
 }
 
 .ban_strike__content_container {
@@ -102,7 +107,7 @@
 
 .ad__preview {
     width: 209px;
-    height: auto;
+    height: 209px;
     flex-shrink: 0;
     border-radius: 15px;
     background: #0BCE83;

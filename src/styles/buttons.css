@@ -42,3 +42,15 @@ button {
     border: 1px solid var(--grayscale-nickel, #737373);
     background: var(--grayscale-nickel, #737373);
 }
+
+.button.auth {
+    display: flex;
+    width: 200px;
+    height: 70px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 15px;
+    background: #0BCE83;
+}

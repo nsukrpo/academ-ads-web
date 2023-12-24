@@ -61,6 +61,15 @@
     color: #CBF265
 }
 
+.heading__A1 {
+    color: #737373;
+    font-family: Roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 116.667% */
+}
+
 .paragraph__B1 {
     font-family: Roboto;
     font-size: 12px;

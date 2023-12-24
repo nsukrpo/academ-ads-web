@@ -1,15 +1,15 @@
 import './users_list.css';
 import './../../styles/text.css'
 import './../../styles/common.css'
-import { DropdownButton, ActionButton} from '../elements/Buttons';
+import { DropdownButton } from '../elements/Buttons';
 import Pagination from '../elements/Pagination';
 import { Link } from 'react-router-dom';
-import { BlockUserWindow, useModal } from '../modal_window/BlockUserWindow';
 import { useEffect, useState } from 'react';
 import Dropdown from '../elements/Dropdown';
 import { NumberInput, TextInput } from '../elements/Inputs';
 import { URL_PATH } from '../../Constants';
-
+import axios from 'axios';
+import { reasons_options } from '../modal_window/BlockAdWindow';
 
 export default UsersList;
 
@@ -60,7 +60,7 @@ function UsersList() {
             <div className="users__list__header">
                 <div className="heading__A2">СПИСОК ПОЛЬЗОВАТЕЛЕЙ</div>
 
-                <div className="filter__zone">
+               {/* <div className="filter__zone">
                     <TextInput value={username} onChange={handleUsernameChange} placeholder="имя пользователя"/>
                     
                     <Dropdown options={ban_reason_options} placeholder={"Причина бана"}/>
@@ -70,7 +70,7 @@ function UsersList() {
                     <NumberInput value={blockingsNum} onChange={handleBlockingsChange} placeholder="число блокировок"/>
                     <NumberInput value={postAdsNum} onChange={handlePostAdsChange} placeholder="число опубликованных объявлений"/>
                     <button className="button action heading__C2" onClick={onFilterButtonClick}>Применить фильтры</button>
-                </div>
+    </div>*/}
             </div>
             <UsersTable/>
             <Pagination/>
@@ -85,32 +85,48 @@ function UsersTable() {
     const [ads, setAds] = useState([])
     const [blockAds, setBlockAds] = useState([])
 
-    const [user, setUser] = useState({
-        name: "Anna",
-        blocked_ads_num: 1,
-        ban_reason: "???",
-        blocks_num: 0,
-        ads_num: 3,
-        status: "EXPIRED",
-        action: "Заблокировать"
-    })
-
     useEffect(()=>{
         loadUsers()
-        users.forEach(element => {
-            loadBlockings(element.id)
-        });
     }, [])
+    useEffect(()=>{
+        if (users.length > 0) {
+           loadBlockings()
+           loadAds()
+        }
+    }, [users])
 
     const loadUsers=async()=>{
-        const result=await axios.get(URL_PATH+'/user')
+        const result=await axios.get(URL_PATH + '/user')
         setUsers(result.data)
     }
-    const loadBlockings = async(id)=>{
-        const result = await axios.get(URL_PATH+'/blocking?user_id='+id)
-        setBlockings(result.data)
+
+    const loadBlockings = async()=>{
+        users.forEach(async user => {
+            const result = await axios.get(URL_PATH+"/blocking?user_id=" + user.id)
+            let arr = result.data.filter((ad)=>ad.user===user.id)
+            setBlockings(prevState => ({
+                ...prevState,
+                [user.id]: arr.length
+            }));
+        });
     }
-    const loadAds = async(id)=>{}
+
+    const loadAds = async()=>{
+        users.forEach(async user => {
+            const result = await axios.get(URL_PATH+"/advertisement", {params: {}})
+            let arrAds = result.data.filter((ad)=>ad.author===user.id)
+            setAds(prevState => ({
+                ...prevState,
+                [user.id]: arrAds.length
+            }));
+
+            let arrBlockedAds = arrAds.filter((ad) => reasons_options.findIndex(item => item.value==ad.status)>=0)
+            setBlockAds(prevState => ({
+                ...prevState,
+                [user.id]: arrBlockedAds.length
+            }));
+        });
+    }
 
     return(
         <table className='users__table'>
@@ -119,8 +135,8 @@ function UsersTable() {
                     <th className='nunito__12'>НИКНЕЙМ</th>
                     <th className='nunito__12'>КОЛИЧЕСТВО ОТКЛОНЕННЫХ ОБЪЯВЛЕНИЙ</th>
                     <th className='nunito__12'>КОЛИЧЕСТВО БЛОКИРОВОК</th>
-                    <th className='nunito__12'>КОЛИЧЕСТВО ОБЪЯВЛЕНИЙ</th>
-                    {/*<th className='nunito__12'>СТАТУС</th>*/}
+                    <th className='nunito__12'>КОЛИЧЕСТВО ОПУБЛИКОВАННЫХ ОБЪЯВЛЕНИЙ</th>
+                    <th className='nunito__12'>СТАТУС</th>
                 </tr>
             </thead>
             <tbody>
@@ -128,12 +144,16 @@ function UsersTable() {
                     users.map((user) => (
                         <tr>
                             <td>
-                                <Link className='heading__C1' to={"/users/"+consumer.id}>{user.name}</Link>
+                                <Link className='heading__C1' to={"/users/"+user.id}>{user.name}</Link>
                             </td>
-                            <td className='heading__C1'>{blockAds.length}</td>
-                            <td className='heading__C1'>{blockings.length}</td>
-                            <td className='heading__C1'>{ads.length}</td>
-                            {/*<td className='heading__C1'>{user.status}</td>*/}
+                            <td className='heading__C1'>{blockAds[user.id]}</td>
+                            <td className='heading__C1'>{blockings[user.id]}</td>
+                            <td className='heading__C1'>{ads[user.id]}</td>
+                            <td className='heading__C1'>
+                                {
+                                    (blockings[user.id]==0 && "Не заблокирован") || "Заблокирован"
+                                }
+                            </td>
                         </tr>
                     ))
                 }

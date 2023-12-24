@@ -1,5 +1,8 @@
 import './component.css';
 import './../../styles/text.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { URL_PATH } from '../../Constants';
 
 function StrikeItem({data}) {
     const [user, setUser] = useState({

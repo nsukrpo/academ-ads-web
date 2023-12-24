@@ -3,15 +3,17 @@ import { CloseButton } from '../elements/Buttons';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Dropdown from '../elements/Dropdown';
+import { URL_PATH } from '../../Constants';
+import axios from 'axios';
 
 export {BlockAdWindow, useModal};
 
-const reasons_options = [
-    {value: "RUDE_WORDS", label: "Нецензурная лексика"},
-    {value: "NUDITY", label: "Порнографические материалы"},
-    {value: "VIOLENCE", label: "Насилие"},
-    {value: "FRAUD", label: "Обман и мошенничество"},
-    {value: "UNINFORMATIVE", label: "Неинформативно"},
+export const reasons_options = [
+    {value: "DECLINE_RUDE_WORDS", label: "Нецензурная лексика"},
+    {value: "DECLINE_NUDITY", label: "Порнографические материалы"},
+    {value: "DECLINE_VIOLENCE", label: "Насилие"},
+    {value: "DECLINE_FRAUD", label: "Обман и мошенничество"},
+    {value: "DECLINE_UNINFORMATIVE", label: "Неинформативно"},
 ]
 
 const useModal = () => {
@@ -25,20 +27,28 @@ const useModal = () => {
 }
 
 const BlockAdWindow = ({ show, onCloseButtonClick, advertisementData }) => {
+    let navigate = useNavigate()
     const [adData, setAdData] = useState({
-        name: advertisementData.name,
-        reason: advertisementData.reason,
-        status: advertisementData.status
+        id: 0,
+        header: "",
+        description: "",
+        price: 0,
+        category: 0,
+        status: "",
     })
     const [selectedReason, setSelectedReason] = useState("")
-    let navigate = useNavigate();
 
     useEffect(() => {
-        // alert(
-        //     "status: " + adData.status +
-        //     "\nreason ban: " + adData.reason
-        // )
-    }, [adData])
+        setAdData({
+            ...adData,
+            id: advertisementData.id,
+            header: advertisementData.header,
+            description: advertisementData.description,
+            price: advertisementData.price,
+            category: advertisementData.category,
+            status: advertisementData.status,
+        })
+    }, [advertisementData])
 
     useEffect(() => {
         console.log(selectedReason)
@@ -53,15 +63,17 @@ const BlockAdWindow = ({ show, onCloseButtonClick, advertisementData }) => {
     }
     const onReasonSelect = (newValue) => {
         setSelectedReason(newValue.value)
-    }
-
-    const onBlockButtonClick = () => {
         setAdData(prevData=>({
             ...prevData,
-            status: "ADVERTISEMENT_CONTENT_MODERATION_DECLINED",
-            reason: selectedReason,
+            status: newValue.value,
         }))
-        navigate('/moderation')
+    }
+
+    const onBlockButtonClick = async() => {
+        alert(adData.id + " " + adData.header + " " + adData.status)
+        await axios.put(URL_PATH+'/advertisement/'+adData.id, adData);
+        navigate("/advertisement/" + adData.id)
+
     }
     
     return(

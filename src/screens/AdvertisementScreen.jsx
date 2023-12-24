@@ -12,7 +12,7 @@ export default function AdvertisementScreen() {
               <div className="vertical__line"/>
               <div className="column">
                 <Infobar/>
-                <Advertisement/>                
+                <ComponentList title={title} item_func={AdvertisementItem}/>                
               </div>
             </div>
         </div>

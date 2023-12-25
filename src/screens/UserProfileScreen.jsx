@@ -2,7 +2,7 @@ import Header from "../components/header/Header"
 import Sidebar from "../components/sidebar/Sidebar"
 import UserProfile from "../components/user_profile/UserProfile"
 
-export const UserProfileScreen = () => {
+export default function UserProfileScreen() {
     return(
         <div>
           <Header/>

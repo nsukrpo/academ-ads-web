@@ -16,14 +16,19 @@ export default function Blockings () {
   }, []);
 
   const loadBlockings=async()=>{
-    const result = await axios.get(URL_PATH + '/user')
-    const usersArr = result.data
-    const arr = []
-    usersArr.forEach(async (user) => {
-        const result = await axios.get(URL_PATH + '/blocking?user_id='+user.id)
-        arr.push(result.data)
+    await axios.get(URL_PATH + '/blocking')
+    .then((response)=>setBlockings(response.data))
+    .catch(function(error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        } else if (error.request) {
+            console.log(error.request);
+        } else {
+            console.log('Error', error.message);
+        }
     })
-    setBlockings(arr)
   }
 
   return (
@@ -37,7 +42,7 @@ export default function Blockings () {
             <div className="content__list">
                 <div className="heading__A2">{title}</div>
                 {
-                  blockings.map((ad)=>(
+                  blockings?.map((ad)=>(
                       <BanItem data={ad}/>
                   ))
                 }

@@ -15,9 +15,21 @@ export default function ResolvedAds () {
   }, []);
 
   const loadAds=async()=>{
-      const result=await axios.get(URL_PATH + '/advertisement', {params: {}})
-      setAdvertisement(result.data.filter((item)=>item.status!==AD_STATUS_SENT_MODERATION));
-      
+      await axios.get(URL_PATH + '/advertisement', {params: {}})
+          .then((response)=>{
+            setAdvertisement(response.data.filter((item)=>item.status!==AD_STATUS_SENT_MODERATION));
+          })
+          .catch(function(error) {
+              if (error.response) {
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+              } else if (error.request) {
+                  console.log(error.request);
+              } else {
+                  console.log('Error', error.message);
+              }
+          })
   }
   
   return (

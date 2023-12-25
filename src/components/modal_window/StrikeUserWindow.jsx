@@ -27,7 +27,6 @@ const useStrikeModal = () => {
 }
 
 const StrikeUserWindow = ({ show, onCloseButtonClick, user }) => {
-    let navigate = useNavigate()
     const [selectedReason, setSelectedReason] = useState("")
 
     if (!show){

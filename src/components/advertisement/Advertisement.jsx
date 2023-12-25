@@ -3,9 +3,9 @@ import './../../styles/text.css';
 import './../../styles/common.css';
 import { BlockAdWindow, useModal } from '../modal_window/BlockAdWindow';
 import Carousel from '../elements/Carousel';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { AD_STATUS_ON_ADS_BOARD, AD_STATUS_SENT_MODERATION, URL_PATH, isAdBlocked } from '../../Constants';
+import { AD_STATUS_ON_ADS_BOARD, AD_STATUS_SENT_MODERATION, URL_PATH, getDate, isAdBlocked } from '../../Constants';
 import axios from 'axios';
 
 const categories = [
@@ -40,10 +40,8 @@ export default function Advertisement() {
         sales: 0,
         purchaces: 0,
     })
-    const [category, setCategory] = useState({
-        id: 0,
-        name: "",
-    })
+    const [category, setCategory] = useState({ id: 0, name: "" })
+    const [photoSrc, setPhotoSrc] = useState("")
 
     useEffect(()=>{
         loadAd()
@@ -54,20 +52,63 @@ export default function Advertisement() {
             return
         loadUser(ad.author)
         loadCategory()
+        loadPhoto(ad.id)
     }, [ad])
 
     const loadAd= async()=>{
-        const result = await axios.get(URL_PATH+'/advertisement/'+id)
-        setAd(result.data)
+        await axios.get(URL_PATH+'/advertisement/'+id)
+            .then((response)=>setAd(response.data))
+            .catch(function(error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                  } else if (error.request) {
+                    console.log(error.request);
+                  } else {
+                    console.log('Error', error.message);
+                  }
+            })
     }
     
     const loadUser = async(id)=>{
-        const result = await axios.get(URL_PATH+'/user/'+id)
-        setAuthor(result.data)
+        await axios.get(URL_PATH+'/user/'+id)
+            .then((response)=>setAuthor(response.data))
+            .catch(function(error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                  } else if (error.request) {
+                    console.log(error.request);
+                  } else {
+                    console.log('Error', error.message);
+                  }
+            })
     }
     const loadCategory = async()=>{
-        const result = await axios.get(URL_PATH+'/category')
-        setCategory(result.data.find(el => el.id===ad.category))
+        await axios.get(URL_PATH+'/category')
+            .then((response)=>setCategory(response.data.find(el => el.id===ad.category)))
+            .catch(function(error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+            })
+    }
+    const loadPhoto = async(id)=>{
+        await axios.get(URL_PATH+'/media/photos/'+id)
+            .then((response) => setPhotoSrc(`data:image/jpeg;base64,${response.data}`))
+            .catch(function(error){
+                if (error.response){
+                    setPhotoSrc("./../../images/default_photo.svg")
+                }
+            })
     }
     
     const onPostButtonClick = async(e) => {
@@ -103,16 +144,15 @@ export default function Advertisement() {
           
             <div className="ad__row">
                 <Carousel>
-                    <div className="ad__photo photo1">photo1</div>
-                    <div className="ad__photo photo2">photo2</div>
-                    <div className="ad__photo photo3">photo3</div>
-                    <div className="ad__photo photo4">photo4</div>
+                    <div className="ad__photo">
+                        <img src={photoSrc} alt="Advertisement Photo"/>
+                    </div>
                 </Carousel>
 
                 <div className="ad__info__column">
                     <div className="heading__A2">{ad.header}</div>
                     <div className="ad__info__label heading__D1 nunito black">{author.name}</div>
-                    <div className="ad__info__label heading__D1 nunito black">{ad.publicationDate}</div>
+                    <div className="ad__info__label heading__D1 nunito black">{getDate(ad.publicationDate)}</div>
                     <div className="ad__price roboto__48">{ad.price} руб.</div>
                     <div className="ad__category heading__D1 nunito platinum">{category.name}</div>
                     <div className="ad__category heading__D1 nunito platinum">Статус: {ad.status}</div>

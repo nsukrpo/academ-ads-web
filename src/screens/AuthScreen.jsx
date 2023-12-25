@@ -82,9 +82,7 @@ export function AuthScreen() {
                     </div>
                     <button className='button auth heading__A3'>Войти</button>
                 </form>
-
             </div>
-
         </div>
     )
 }

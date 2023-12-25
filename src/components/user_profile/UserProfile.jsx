@@ -9,7 +9,7 @@ import BlockedAdvertisement from '../component_list/BlockedAdvertisement';
 import BanItem from '../component_list/BanItem';
 import StrikeItem from '../component_list/StrikeItem';
 import { useNavigate, useParams } from 'react-router-dom';
-import { URL_PATH, isAdBlocked } from '../../Constants';
+import { URL_PATH, getDate, isAdBlocked } from '../../Constants';
 import axios from 'axios';
 import { StrikeUserWindow, useStrikeModal } from '../modal_window/StrikeUserWindow';
 
@@ -41,20 +41,72 @@ function UserProfile() {
     }, [])
 
     const loadUser = async(id)=>{
-        const result = await axios.get(URL_PATH+'/user/'+id)
-        setUser(result.data)
+        await axios.get(URL_PATH+'/user/'+id)
+        .then((response)=>{
+            setUser(response.data)
+        })
+        .catch(function(error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+        })
     }
-    const loadBlockedAds = async(id)=>{
-        const result = await axios.get(URL_PATH+"/advertisement", {params: {}})
-        setBlockedAds(result.data.filter((ad)=> ad.author==id && isAdBlocked(ad.status)))
+    const loadBlockedAds = async(id)=>{ 
+        await axios.get(URL_PATH+"/advertisement", {params: {}})
+        .then((response)=>{
+            setBlockedAds(response.data.filter((ad)=> ad.author==id && isAdBlocked(ad.status)))
+        })
+        .catch(function(error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+        })
     }
     const loadBlockings = async(id)=>{
-        const result = await axios.get(URL_PATH+'/blocking?user_id='+id)
-        setBlockings(result.data)
+        await axios.get(URL_PATH+'/blocking?user_id='+id)
+          .then((response)=>{
+            setBlockings(response.data)
+          })
+          .catch(function(error) {
+              if (error.response) {
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+              } else if (error.request) {
+                  console.log(error.request);
+              } else {
+                  console.log('Error', error.message);
+              }
+          })
     }
     const loadStrikes = async(id)=>{
-        const result = await axios.get(URL_PATH+'/strike?user_id='+id)
-        setStrikes(result.data)
+        await axios.get(URL_PATH+'/strike?user_id='+id)
+          .then((response)=>{
+            setStrikes(response.data)
+          })
+          .catch(function(error) {
+              if (error.response) {
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+              } else if (error.request) {
+                  console.log(error.request);
+              } else {
+                  console.log('Error', error.message);
+              }
+          })
     }
 
     const onBlockedAdsClick = () => {
@@ -68,8 +120,21 @@ function UserProfile() {
     }
     const onUnblockClick=async() => {
         await axios.delete(URL_PATH+'/blocking/'+blockings[0].id, { params: { id: blockings[0].id } })
-        loadUser(id)
-        loadBlockings(id)
+          .then((response)=>{
+            loadUser(id)
+            loadBlockings(id)
+          })
+          .catch(function(error) {
+              if (error.response) {
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+              } else if (error.request) {
+                  console.log(error.request);
+              } else {
+                  console.log('Error', error.message);
+              }
+          })
     }
     const onBackClick = () => {
         navigate("/users")
@@ -85,7 +150,7 @@ function UserProfile() {
                         <img src={userImg} alt="Avatar"/>
                         <div className='column info'>
                             <div className="heading__D1 nunito">{user.name}</div>
-                            <div className="heading__D2 nunito">Дата регистрации: {user.regDate}</div>
+                            <div className="heading__D2 nunito">Дата регистрации: {getDate(user.regDate)}</div>
                             <div className="heading__D2 nunito">Количество продаж: {user.sales}</div>
                             <div className="heading__D2 nunito">Количество покупок: {user.purchases}</div>
                             <div className="heading__D2 nunito">Статус: 

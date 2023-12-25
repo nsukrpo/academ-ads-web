@@ -70,10 +70,8 @@ const BlockAdWindow = ({ show, onCloseButtonClick, advertisementData }) => {
     }
 
     const onBlockButtonClick = async() => {
-        alert(adData.id + " " + adData.header + " " + adData.status)
         await axios.put(URL_PATH+'/advertisement/'+adData.id, adData);
-        navigate("/advertisement/" + adData.id)
-
+        navigate("/moderation")
     }
     
     return(

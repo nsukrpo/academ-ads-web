@@ -8,29 +8,26 @@ import { URL_PATH } from "../Constants";
 
 export default function Strikes () {
   const title = 'Список предупреждений'
-  const [users, setUsers] = useState([])
   const [strikes, setStrikes] = useState([])
 
   useEffect(()=>{
-      loadUsers();
-  }, []);
-  
-  useEffect(()=>{
       loadStrikes();
-  }, [users]);
-
-  const loadUsers=async()=>{
-    const result = await axios.get(URL_PATH + '/user')
-    setUsers(result.data);      
-  }
+  }, []);
 
   const loadStrikes=async()=>{
-    const arr = []
-    users.forEach(async (user) => {
-        const result = await axios.get(URL_PATH + '/strike?user_id='+user.id, {params: {user_id: user.id}})
-        arr.push(...result.data)
-    })
-    setStrikes(arr)
+    await axios.get(URL_PATH + '/strike')
+            .then((response)=>setStrikes(response.data))
+            .catch(function(error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+            })
   }
 
   return (
@@ -44,7 +41,7 @@ export default function Strikes () {
             <div className="content__list">
                 <div className="heading__A2">{title}</div>
                 {
-                  strikes.map((ad)=>(
+                  strikes?.map((ad)=>(
                       <StrikeItem data={ad}/>
                   ))
                 }

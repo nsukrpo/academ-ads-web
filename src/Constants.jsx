@@ -13,3 +13,11 @@ export function isAdBlocked(status) {
             (status === AD_STATUS_DECLINE_RUDE_WORDS) || (status === AD_STATUS_DECLINE_UNINFORMATIVE) ||
             (status === AD_STATUS_DECLINE_VIOLENCE)
 }
+
+export function getDate(str) {
+    const date = new Date(str);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return day+"."+month+"."+year
+}

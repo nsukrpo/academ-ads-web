@@ -24,7 +24,7 @@ function StrikeItem({data}) {
         <div className="strike">
             <div className="row">
                 <div className="component__content">
-                    <div className="heading__A2 salad">Предупреждение</div>
+                    <div className="heading__A2 salad">Предупреждение {data.id}</div>
                     <div className="ban_strike__content_container">
                         <div className="ban_strike__content_item_label">
                             <div className="heading__D1 nunito">Пользователь</div>
@@ -36,7 +36,7 @@ function StrikeItem({data}) {
                             <div className="heading__D1 nunito">Причина</div>
                         </div>
                         <div className="ban_strike__content_item_value">
-                            <div className="heading__D1 nunito">{user.reason}</div>
+                            <div className="heading__D1 nunito">{data.reason}</div>
                         </div>
                     </div>
                 </div>

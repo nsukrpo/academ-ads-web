@@ -5,7 +5,7 @@ import Dropdown from '../elements/Dropdown';
 import axios from 'axios';
 import { URL_PATH } from '../../Constants';
 
-export { useModal, BlockUserWindow }
+export { useBlockModal, BlockUserWindow }
 
 const user_reasons_options = [
     {value: "STRIKES_LIMIT", label: "Превышено количество предупреждений"},
@@ -20,7 +20,7 @@ const duration_options = [
     {value: "FOREVER", label: "Навсегда"},
 ]
 
-const useModal = () => {
+const useBlockModal = () => {
     const [isShowing, setIsShowing] = useState(false)
     
     function toggle() {

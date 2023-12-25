@@ -9,16 +9,11 @@ import { URL_PATH } from "../Constants";
 export default function Blockings () {
   const title = 'Список блокировок'
   
-  const [users, setUsers] = useState([])
   const [blockings, setBlockings] = useState([])
 
   useEffect(()=>{
     loadBlockings();
   }, []);
-
-  const loadUsers=async()=>{
-
-  }
 
   const loadBlockings=async()=>{
     const result = await axios.get(URL_PATH + '/user')

@@ -3,7 +3,7 @@ import { BackButton } from '../elements/Buttons';
 import './user_profile.css';
 import './../../styles/common.css';
 import './../../styles/text.css';
-import { BlockUserWindow, useModal } from '../modal_window/BlockUserWindow';
+import { BlockUserWindow, useBlockModal } from '../modal_window/BlockUserWindow';
 import { useEffect, useState } from 'react';
 import BlockedAdvertisement from '../component_list/BlockedAdvertisement';
 import BanItem from '../component_list/BanItem';
@@ -11,6 +11,7 @@ import StrikeItem from '../component_list/StrikeItem';
 import { useNavigate, useParams } from 'react-router-dom';
 import { URL_PATH, isAdBlocked } from '../../Constants';
 import axios from 'axios';
+import { StrikeUserWindow, useStrikeModal } from '../modal_window/StrikeUserWindow';
 
 export default UserProfile;
 
@@ -18,7 +19,8 @@ function UserProfile() {
     let navigate = useNavigate()
     const {id}=useParams()
 
-    const [ isShowingModal, toggleModal ] = useModal();
+    const [ isShowingBlockModal, toggleBlockModal ] = useBlockModal();
+    const [ isShowingStrikeModal, toggleStrikeModal ] = useStrikeModal();
     const [title, setTitle] = useState("Заблокированные объявления")
     const [blockedAds, setBlockedAds] = useState([])
     const [blockings, setBlockings] = useState([])
@@ -28,7 +30,7 @@ function UserProfile() {
         name: "",
         regDate: "",
         sales: 0,
-        purchaces: 0,
+        purchases: 0,
     })
 
     useEffect(()=>{
@@ -85,10 +87,10 @@ function UserProfile() {
                             <div className="heading__D1 nunito">{user.name}</div>
                             <div className="heading__D2 nunito">Дата регистрации: {user.regDate}</div>
                             <div className="heading__D2 nunito">Количество продаж: {user.sales}</div>
-                            <div className="heading__D2 nunito">Количество покупок: {user.purchaces}</div>
+                            <div className="heading__D2 nunito">Количество покупок: {user.purchases}</div>
                             <div className="heading__D2 nunito">Статус: 
                                 {
-                                    (blockings.length==0 && " Не заблокирован") || " Заблокирован"
+                                    (blockings.length===0 && " Не заблокирован") || " Заблокирован"
                                 }
                             </div>
                         </div>
@@ -137,14 +139,20 @@ function UserProfile() {
             <div className="tapbar">
                 {
                     (blockings.length === 0 && 
-                    <button className="button action heading__C2" onClick={toggleModal}>ЗАБЛОКИРОВАТЬ</button>) ||
+                    <button className="button action heading__C2" onClick={toggleBlockModal}>ЗАБЛОКИРОВАТЬ</button>) ||
                     <button className="button action heading__C2" onClick={onUnblockClick}>РАЗБЛОКИРОВАТЬ</button>
                 }
+                <button className="button action heading__C2" onClick={toggleStrikeModal}>ПРЕДУПРЕЖДЕНИЕ</button>
             </div>
 
             <BlockUserWindow
-                show={isShowingModal}
-                onCloseButtonClick={toggleModal}
+                show={isShowingBlockModal}
+                onCloseButtonClick={toggleBlockModal}
+                user={user}
+            />
+            <StrikeUserWindow
+                show={isShowingStrikeModal}
+                onCloseButtonClick={toggleStrikeModal}
                 user={user}
             />
         </div>

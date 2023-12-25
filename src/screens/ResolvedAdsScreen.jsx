@@ -1,7 +1,6 @@
 import Header from "../components/header/Header";
 import Sidebar, { pages } from "../components/sidebar/Sidebar";
 import Infobar from "../components/infobar/Infobar";
-import ComponentList from '../components/component_list/ComponentList';
 import AdvertisementItem from '../components/component_list/AdvertisementItem';
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -17,7 +16,7 @@ export default function ResolvedAds () {
 
   const loadAds=async()=>{
       const result=await axios.get(URL_PATH + '/advertisement', {params: {}})
-      setAdvertisement(result.data.filter((item)=>item.status!=AD_STATUS_SENT_MODERATION));
+      setAdvertisement(result.data.filter((item)=>item.status!==AD_STATUS_SENT_MODERATION));
       
   }
   

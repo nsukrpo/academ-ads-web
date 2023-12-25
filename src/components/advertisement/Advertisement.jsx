@@ -67,7 +67,7 @@ export default function Advertisement() {
     }
     const loadCategory = async()=>{
         const result = await axios.get(URL_PATH+'/category')
-        setCategory(result.data.find(el => el.id==ad.category))
+        setCategory(result.data.find(el => el.id===ad.category))
     }
     
     const onPostButtonClick = async(e) => {
@@ -97,7 +97,7 @@ export default function Advertisement() {
     return (
         <div className="advertisement">
             <div className="heading__A2">{
-                (ad.status == AD_STATUS_SENT_MODERATION && "Новое объявление") ||
+                (ad.status === AD_STATUS_SENT_MODERATION && "Новое объявление") ||
                 "Рассмотренное объявление"
             }</div>
           
@@ -124,7 +124,7 @@ export default function Advertisement() {
 
             <div className="tapbar">
                 {(
-                    ad.status == AD_STATUS_SENT_MODERATION &&
+                    ad.status === AD_STATUS_SENT_MODERATION &&
                     <button className="button action heading__C2" onClick={(e)=>onPostButtonClick(e)}>ОПУБЛИКОВАТЬ</button>
                 )}
                 {

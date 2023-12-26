@@ -1,33 +1,28 @@
 import logoImg from './../../images/academ_ads_logo.svg';
-import avatarImg from './../../images/admin_avatar.svg';
 import './header.css';
 import './../../styles/common.css'
 import './../../styles/text.css'
-import { useState } from 'react';
+import AuthService from '../../services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 function Header () {
-    const [isOpen, setIsOpen] = useState(false);
+    let navigate = useNavigate()
 
     const onProfileClick = () => {
-        setIsOpen((prev) => !prev)
-
-        {isOpen && <div className="header__dropdown">Выйти</div> }
+        AuthService.logout()
+        navigate("/auth")
     }
 
     return (
         <header className="header__row">
-                    <div className="logo">
-                        <img src={logoImg} alt="Logo"/>
-                    </div>
-
-                    <div className="header__title__column"> 
-                        <div className="header__title">Academ Ads</div>
-                        <div className="heading__C1">admin app</div>
-                    </div>
-
-                    <button className='profile_button' onClick = {onProfileClick}>
-                        <div className="heading__C2 green">Выйти</div>
-                    </button>
+            <div className="logo">
+                <img src={logoImg} alt="Logo"/>
+            </div>
+            <div className="header__title__column"> 
+                <div className="header__title">Academ Ads</div>
+                <div className="heading__C1">admin app</div>
+            </div>
+            <button className='button logout heading__C2 green' onClick = {onProfileClick}>Выйти</button>
         </header>
     );
 }

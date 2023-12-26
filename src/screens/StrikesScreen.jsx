@@ -4,14 +4,22 @@ import Infobar from "../components/infobar/Infobar";
 import StrikeItem from '../components/component_list/StrikeItem';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { URL_PATH } from "../Constants";
+import { URL_PATH, isAdmin } from "../Constants";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../services/AuthService";
 
 export default function Strikes () {
-  const title = 'Список предупреждений'
+  let navigate = useNavigate()
   const [strikes, setStrikes] = useState([])
 
   useEffect(()=>{
-      loadStrikes();
+    const curUser = AuthService.getCurrentUser()
+      const curRole = AuthService.getCurrentRole()
+      if (!curUser || !isAdmin(curRole)) {
+        navigate("/auth")
+      } else {
+        loadStrikes();
+      }
   }, []);
 
   const loadStrikes=async()=>{
@@ -39,7 +47,7 @@ export default function Strikes () {
           <div className="column">
             <Infobar/>
             <div className="content__list">
-                <div className="heading__A2">{title}</div>
+                <div className="heading__A2">Список предупреждений</div>
                 {
                   strikes?.map((ad)=>(
                       <StrikeItem data={ad}/>

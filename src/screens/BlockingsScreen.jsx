@@ -4,15 +4,23 @@ import Infobar from "../components/infobar/Infobar";
 import BanItem from '../components/component_list/BanItem';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { URL_PATH } from "../Constants";
+import { URL_PATH, isAdmin } from "../Constants";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../services/AuthService";
 
 export default function Blockings () {
-  const title = 'Список блокировок'
+  let navigate = useNavigate()
   
   const [blockings, setBlockings] = useState([])
 
   useEffect(()=>{
-    loadBlockings();
+    const curUser = AuthService.getCurrentUser()
+    const curRole = AuthService.getCurrentRole()
+    if (!curUser || !isAdmin(curRole)) {
+        navigate("/auth")
+      } else {
+        loadBlockings();
+      }
   }, []);
 
   const loadBlockings=async()=>{
@@ -40,7 +48,7 @@ export default function Blockings () {
           <div className="column">
             <Infobar/>
             <div className="content__list">
-                <div className="heading__A2">{title}</div>
+                <div className="heading__A2">Список блокировок</div>
                 {
                   blockings?.map((ad)=>(
                       <BanItem data={ad}/>

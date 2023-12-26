@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { URL_PATH } from '../../Constants';
 import axios from 'axios';
 import { reasons_options } from '../modal_window/BlockAdWindow';
+import AuthHeader from '../../services/AuthHeader';
 
 export default UsersList;
 
@@ -38,7 +39,7 @@ function UsersTable() {
     }, [users])
 
     const loadUsers=async()=>{
-        const result=await axios.get(URL_PATH + '/user')
+        const result=await axios.get(URL_PATH + '/user', { headers: AuthHeader() })
         setUsers(result.data)
     }
 

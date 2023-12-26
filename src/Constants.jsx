@@ -21,3 +21,8 @@ export function getDate(str) {
     const day = date.getDate().toString().padStart(2, '0');
     return day+"."+month+"."+year
 }
+
+export function isAdmin(str) {
+    return str === "ADMIN"
+}
+

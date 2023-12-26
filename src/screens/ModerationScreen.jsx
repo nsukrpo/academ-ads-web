@@ -4,13 +4,22 @@ import Infobar from "../components/infobar/Infobar";
 import AdvertisementItem from '../components/component_list/AdvertisementItem';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { AD_STATUS_SENT_MODERATION, URL_PATH } from "../Constants";
+import { AD_STATUS_SENT_MODERATION, URL_PATH, isAdmin } from "../Constants";
+import AuthService from "../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export default function Moderation () {
+  let navigate = useNavigate()
   const [advertisements, setAdvertisement] = useState([])
 
   useEffect(()=>{
-      loadAds();
+      const curUser = AuthService.getCurrentUser()
+      const curRole = AuthService.getCurrentRole()
+      if (!curUser || !isAdmin(curRole)) {
+        navigate("/auth")
+      } else {
+        loadAds();
+      }
   }, []);
 
   const loadAds=async()=>{ 

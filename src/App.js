@@ -1,4 +1,3 @@
-import { useRoutes } from "./routes/Routes";
 import { Routes, Route } from "react-router-dom";
 import Main from "./screens/Main";
 import Moderation from "./screens/ModerationScreen";
@@ -8,16 +7,16 @@ import ResolvedAds from "./screens/ResolvedAdsScreen";
 import Strikes from "./screens/StrikesScreen";
 import Blockings from "./screens/BlockingsScreen";
 import AdvertisementScreen from "./screens/AdvertisementScreen";
+import { AuthScreen } from "./screens/AuthScreen";
 
 export default App;
 function App() {
-  const routes = useRoutes()
-
   return (
     <div className="App">
       <div className="container">
       <Routes>
         <Route path="/" element={<Main />} />
+          <Route path="/auth" element={<AuthScreen />} /> 
           <Route path="/moderation" element={<Moderation/>} />
           <Route path="/users" element={<UserListScreen />}></Route>
           <Route path="/users/:id" element={<UserProfileScreen />}></Route>

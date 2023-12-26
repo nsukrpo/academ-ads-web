@@ -4,14 +4,22 @@ import Infobar from "../components/infobar/Infobar";
 import AdvertisementItem from '../components/component_list/AdvertisementItem';
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { AD_STATUS_SENT_MODERATION, URL_PATH } from "../Constants";
+import { AD_STATUS_SENT_MODERATION, URL_PATH, isAdmin } from "../Constants";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../services/AuthService";
 
 export default function ResolvedAds () {
-  const title = 'Закрытые объявления'
+  let navigate = useNavigate()
   const [advertisements, setAdvertisement] = useState([])
 
   useEffect(()=>{
-      loadAds();
+    const curUser = AuthService.getCurrentUser()
+    const curRole = AuthService.getCurrentRole()
+    if (!curUser || !isAdmin(curRole)) {
+        navigate("/auth")
+      } else {
+        loadAds();
+      }
   }, []);
 
   const loadAds=async()=>{
@@ -42,8 +50,7 @@ export default function ResolvedAds () {
             <Infobar/>
             <div className="content__list">
               <div className="heading__A2">{
-                    (advertisements.length===0 && "Нет объявлений на модерацию") ||
-                    title
+                    advertisements.length===0 ? "Нет объявлений на модерацию" : "Закрытые объявления"
               }
               </div>
               {

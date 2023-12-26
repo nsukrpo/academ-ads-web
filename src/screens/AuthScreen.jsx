@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { URL_PATH } from '../Constants';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 
 export function AuthScreen() {
     let navigate=useNavigate();
@@ -25,12 +26,18 @@ export function AuthScreen() {
         setUser({...user,[e.target.name]:e.target.value});
     }
 
-    const onSubmit= async (data) => {
-        //console.log(consumer);
-        //alert(JSON.stringify(consumer));
-        await axios.post(URL_PATH+"consumers", user);
-        navigate("/consumers");
+    const handleLogin = (e) => {
+        AuthService.login(user.login, user.password)
+            .then(()=>{
+                navigate('/moderation')
+                window.location.reload()
+            },
+            error => {
+                console.log(error.toString())
+            })
     }
+
+
 
     return (
         <div className="container">
@@ -48,7 +55,7 @@ export function AuthScreen() {
                 <hr className="auth__line"/>
                 <div className="heading__B1 platinum">Войдите в свою учетную запись</div>
                 
-                <form onSubmit={handleSubmit(onSubmit)} className='auth__form'>
+                <form onSubmit={handleSubmit(handleLogin)} className='auth__form'>
                     <input 
                         type="text" 
                         className="auth__input  heading__A1" 

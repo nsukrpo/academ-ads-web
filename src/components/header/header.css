@@ -37,15 +37,3 @@
     letter-spacing: 4.4px;
 }
 
-.profile_button {
-    display: flex;
-    width: 118px;
-    height: 50px;
-    padding: 7px 7px 7px 15px;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    border-radius: 40px;
-    background: var(--grayscale-white, #FFF);
-}
-

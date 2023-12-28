@@ -12,6 +12,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { URL_PATH, getDate, isAdBlocked } from '../../Constants';
 import axios from 'axios';
 import { StrikeUserWindow, useStrikeModal } from '../modal_window/StrikeUserWindow';
+import AuthService from '../../services/AuthService';
+import ApiClient from '../../services/ApiClient';
 
 export default UserProfile;
 
@@ -41,72 +43,18 @@ function UserProfile() {
     }, [])
 
     const loadUser = async(id)=>{
-        await axios.get(URL_PATH+'/user/'+id)
-        .then((response)=>{
-            setUser(response.data)
-        })
-        .catch(function(error) {
-            if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            } else if (error.request) {
-                console.log(error.request);
-            } else {
-                console.log('Error', error.message);
-            }
-        })
+        ApiClient.findUser(id, data => setUser(data))
     }
     const loadBlockedAds = async(id)=>{ 
-        await axios.get(URL_PATH+"/advertisement", {params: {}})
-        .then((response)=>{
-            setBlockedAds(response.data.filter((ad)=> ad.author==id && isAdBlocked(ad.status)))
-        })
-        .catch(function(error) {
-            if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            } else if (error.request) {
-                console.log(error.request);
-            } else {
-                console.log('Error', error.message);
-            }
-        })
+        ApiClient.findAllAds(data => 
+            setBlockedAds(data.filter(ad => ad.author==id && isAdBlocked(ad.status)))    
+        )
     }
     const loadBlockings = async(id)=>{
-        await axios.get(URL_PATH+'/blocking?user_id='+id)
-          .then((response)=>{
-            setBlockings(response.data)
-          })
-          .catch(function(error) {
-              if (error.response) {
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-              } else if (error.request) {
-                  console.log(error.request);
-              } else {
-                  console.log('Error', error.message);
-              }
-          })
+        ApiClient.findUserBlocking(id, data => setBlockings(data))
     }
     const loadStrikes = async(id)=>{
-        await axios.get(URL_PATH+'/strike?user_id='+id)
-          .then((response)=>{
-            setStrikes(response.data)
-          })
-          .catch(function(error) {
-              if (error.response) {
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-              } else if (error.request) {
-                  console.log(error.request);
-              } else {
-                  console.log('Error', error.message);
-              }
-          })
+        ApiClient.findUserStrike(id, data => setStrikes(data))
     }
 
     const onBlockedAdsClick = () => {
@@ -119,22 +67,13 @@ function UserProfile() {
         setTitle("Предупреждения")
     }
     const onUnblockClick=async() => {
-        await axios.delete(URL_PATH+'/blocking/'+blockings[0].id, { params: { id: blockings[0].id } })
-          .then((response)=>{
-            loadUser(id)
-            loadBlockings(id)
-          })
-          .catch(function(error) {
-              if (error.response) {
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-              } else if (error.request) {
-                  console.log(error.request);
-              } else {
-                  console.log('Error', error.message);
-              }
-          })
+        ApiClient.deleteBlocking(
+            blockings[0].id,
+            ()=>{
+                loadUser(id)
+                loadBlockings(id)
+            }
+        )
     }
     const onBackClick = () => {
         navigate("/users")

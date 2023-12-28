@@ -13,9 +13,13 @@ function Header () {
         navigate("/auth")
     }
 
+    const clickLogo = () => {
+        console.log(AuthService.getCurrentToken())
+    }
+
     return (
         <header className="header__row">
-            <div className="logo">
+            <div className="logo" onClick={clickLogo}>
                 <img src={logoImg} alt="Logo"/>
             </div>
             <div className="header__title__column"> 

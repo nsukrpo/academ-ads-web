@@ -10,7 +10,7 @@ class AuthService {
         .then(response => {
             if (response.data){
                 const data = parseJwt(response.data);
-                localStorage.setItem("token", JSON.stringify(data));
+                localStorage.setItem("token", JSON.stringify(response.data));
                 localStorage.setItem("user", JSON.stringify(data.user_id));
                 localStorage.setItem("role", JSON.stringify(data.role));
             }

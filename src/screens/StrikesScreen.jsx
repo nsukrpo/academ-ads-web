@@ -3,10 +3,10 @@ import Sidebar, { pages } from "../components/sidebar/Sidebar";
 import Infobar from "../components/infobar/Infobar";
 import StrikeItem from '../components/component_list/StrikeItem';
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { URL_PATH, isAdmin } from "../Constants";
+import { isAdmin } from "../Constants";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/AuthService";
+import ApiClient from "../services/ApiClient";
 
 export default function Strikes () {
   let navigate = useNavigate()
@@ -23,19 +23,7 @@ export default function Strikes () {
   }, []);
 
   const loadStrikes=async()=>{
-    await axios.get(URL_PATH + '/strike')
-            .then((response)=>setStrikes(response.data))
-            .catch(function(error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-            })
+    ApiClient.findAllStrikes(data => setStrikes(data))
   }
 
   return (

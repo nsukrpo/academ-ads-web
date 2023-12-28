@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { URL_PATH, getDate } from '../../Constants';
+import AuthService from '../../services/AuthService';
+import ApiClient from '../../services/ApiClient';
 
 function AdvertisementItem({data}) {
     const [user, setUser] = useState({
@@ -21,30 +23,14 @@ function AdvertisementItem({data}) {
     }, [])
 
     const loadUser = async(id)=>{
-        await axios.get(URL_PATH+'/user/'+id)
-          .then((response)=>{
-            setUser(response.data)
-          })
-          .catch(function(error) {
-              if (error.response) {
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-              } else if (error.request) {
-                  console.log(error.request);
-              } else {
-                  console.log('Error', error.message);
-              }
-          })
+        ApiClient.findUser(id, data => setUser(data))
     }
     const loadPhoto = async(id)=>{
-        await axios.get(URL_PATH+'/media/photos/'+id)
-            .then((response) => setPhotoSrc(`data:image/jpeg;base64,${response.data}`))
-            .catch(function(error){
-                if (error.response){
-                    setPhotoSrc("./../../images/default_photo.svg")
-                }
-            })
+        ApiClient.findAdPhoto(
+            id,
+            data => setPhotoSrc(`data:image/jpeg;base64,${data}`),
+            setPhotoSrc("./../../images/default_photo.svg")
+        )
     }
 
     return (

@@ -6,6 +6,9 @@
     font-weight: 400;
     line-height: 19px; /* 118.75% */
 }
+.heading__C1.red {
+    color: red;
+}
 
 .heading__C2 {
     color: #FFF;

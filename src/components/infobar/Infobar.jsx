@@ -1,14 +1,28 @@
 import './infobar.css';
 import './../../styles/common.css';
 import './../../styles/text.css';
-
-import { Link } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
+import { useEffect, useState } from 'react';
+import ApiClient from '../../services/ApiClient';
 
 function Infobar() {
+    const[user, setUser] = useState({
+        name: ""
+    })
+
+    useEffect(()=>{
+        loadUser(AuthService.getCurrentUser())
+    }, [])
+
+    const loadUser = async(id) => {
+        ApiClient.findUser(id, data => setUser(data))
+    }
+
+
     return (
         <div className="infobar">
             <div className="container">
-                <div className="heading__A2">Hey, Admin</div>
+                <div className="heading__A2">Hey, {user.name}</div>
                 {/*<Link to="/users/id" className="infobar__row" style={{ textDecoration: 'none' }}>
                     <div className="heading__B1 violet">Latest registration users</div>
                     <div className="registration__row">

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { DropdownButton } from './Buttons';
+import React from 'react';
 import Select from 'react-select';
 import './dropdown.css';
 

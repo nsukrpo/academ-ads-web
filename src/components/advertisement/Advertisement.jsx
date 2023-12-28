@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AD_STATUS_ON_ADS_BOARD, AD_STATUS_SENT_MODERATION, URL_PATH, getDate, isAdBlocked } from '../../Constants';
 import axios from 'axios';
+import AuthService from '../../services/AuthService';
+import ApiClient from '../../services/ApiClient';
 
 const categories = [
     {value: "EDUCATIONAL_STUFF", label: "Учебные принадлежности"},
@@ -56,83 +58,52 @@ export default function Advertisement() {
     }, [ad])
 
     const loadAd= async()=>{
-        await axios.get(URL_PATH+'/advertisement/'+id)
-            .then((response)=>setAd(response.data))
-            .catch(function(error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                  } else if (error.request) {
-                    console.log(error.request);
-                  } else {
-                    console.log('Error', error.message);
-                  }
-            })
+        ApiClient.findOneAd(id, data => setAd(data))
     }
-    
     const loadUser = async(id)=>{
-        await axios.get(URL_PATH+'/user/'+id)
-            .then((response)=>setAuthor(response.data))
-            .catch(function(error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                  } else if (error.request) {
-                    console.log(error.request);
-                  } else {
-                    console.log('Error', error.message);
-                  }
-            })
+        ApiClient.findUser(id, data => setAuthor(data))
     }
     const loadCategory = async()=>{
-        await axios.get(URL_PATH+'/category')
-            .then((response)=>setCategory(response.data.find(el => el.id===ad.category)))
-            .catch(function(error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-            })
+        ApiClient.findCategory(data =>
+            setCategory(data.find(el => el.id===ad.category))
+        )
     }
     const loadPhoto = async(id)=>{
-        await axios.get(URL_PATH+'/media/photos/'+id)
-            .then((response) => setPhotoSrc(`data:image/jpeg;base64,${response.data}`))
-            .catch(function(error){
-                if (error.response){
-                    setPhotoSrc("./../../images/default_photo.svg")
-                }
-            })
+        ApiClient.findAdPhoto(
+            id,
+            data => setPhotoSrc(`data:image/jpeg;base64,${data}`),
+            setPhotoSrc("./../../images/default_photo.svg")
+        )
     }
     
     const onPostButtonClick = async(e) => {
-        await axios.put(URL_PATH+'/advertisement/'+ad.id, {
-            id: ad.id,
-            header: ad.header,
-            description: ad.description,
-            price: ad.price,
-            category: ad.category,
-            status: AD_STATUS_ON_ADS_BOARD,
-        });
-        loadAd()
+        ApiClient.changeAd(
+            ad.id,
+            {
+                id: ad.id,
+                header: ad.header,
+                description: ad.description,
+                price: ad.price,
+                category: ad.category,
+                status: AD_STATUS_ON_ADS_BOARD,
+            },  
+            loadAd()
+        )
     };
 
     const onUnblockClick = async(e) => {
-        await axios.put(URL_PATH+'/advertisement/'+ad.id, {
-            id: ad.id,
-            header: ad.header,
-            description: ad.description,
-            price: ad.price,
-            category: ad.category,
-            status: AD_STATUS_SENT_MODERATION,
-        });
-        loadAd()
+        ApiClient.changeAd(
+            ad.id,
+            {
+                id: ad.id,
+                header: ad.header,
+                description: ad.description,
+                price: ad.price,
+                category: ad.category,
+                status: AD_STATUS_SENT_MODERATION,
+            }, 
+            loadAd()
+        )
     };
 
     return (

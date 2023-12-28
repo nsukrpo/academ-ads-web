@@ -2,16 +2,20 @@ import logoImg from './../images/academ_ads_logo.svg'
 import './../styles/common.css';
 import './../styles/text.css';
 import './../styles/auth_screen.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { URL_PATH } from '../Constants';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
+import { isAdmin } from '../Constants';
 
 export function AuthScreen() {
     let navigate=useNavigate();
-  
+
+    useEffect(()=>{
+        AuthService.logout()
+    },[])
+    
+    const [error, setError] = useState("")
     const [user, setUser] = useState({
         login:"",
         password:"",
@@ -29,16 +33,19 @@ export function AuthScreen() {
     const handleLogin = (e) => {
         AuthService.login(user.login, user.password)
             .then(()=>{
-                navigate('/moderation')
-                window.location.reload()
+                const curRole = AuthService.getCurrentRole()
+                if(isAdmin(curRole)){
+                    navigate('/moderation')
+                    window.location.reload()
+                } else {
+                    setError("У вас недостаточно прав для входа")
+                }
             },
             error => {
                 console.log(error.toString())
             })
     }
-
-
-
+    
     return (
         <div className="container">
             <div className="logo auth">
@@ -55,6 +62,7 @@ export function AuthScreen() {
                 <hr className="auth__line"/>
                 <div className="heading__B1 platinum">Войдите в свою учетную запись</div>
                 
+                <div className="heading__C1 red">{error}</div>
                 <form onSubmit={handleSubmit(handleLogin)} className='auth__form'>
                     <input 
                         type="text" 

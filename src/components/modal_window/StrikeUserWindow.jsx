@@ -4,7 +4,8 @@ import { useState } from 'react';
 import Dropdown from '../elements/Dropdown';
 import axios from 'axios';
 import { URL_PATH } from '../../Constants';
-import { useNavigate } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
+import ApiClient from '../../services/ApiClient';
 
 export { useStrikeModal, StrikeUserWindow }
 
@@ -40,11 +41,13 @@ const StrikeUserWindow = ({ show, onCloseButtonClick, user }) => {
         setSelectedReason(newValue.value)
     }
     const onStrikeButtonClick = async () => {
-        await axios.post(URL_PATH+"/strike", {
-            user_id: user.id,
-            reason: selectedReason
-        })
-        onCloseButtonClick()
+        ApiClient.addStrike(
+            {
+                user_id: user.id,
+                reason: selectedReason
+            },
+            onCloseButtonClick()
+        )
     }
 
     return(

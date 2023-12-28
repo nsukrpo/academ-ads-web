@@ -1,8 +1,8 @@
 import './component.css';
 import './../../styles/text.css';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { URL_PATH, getDate } from '../../Constants';
+import { getDate } from '../../Constants';
+import ApiClient from '../../services/ApiClient';
 
 function BanItem({data}) {
     const [user, setUser] = useState({
@@ -16,21 +16,7 @@ function BanItem({data}) {
     }, [])
 
     const loadUser = async(id)=>{
-        await axios.get(URL_PATH+'/user/'+id)
-          .then((response)=>{
-            setUser(response.data)
-          })
-          .catch(function(error) {
-              if (error.response) {
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-              } else if (error.request) {
-                  console.log(error.request);
-              } else {
-                  console.log('Error', error.message);
-              }
-          })
+        ApiClient.findUser(id, data => setUser(data))
     }
     
     return (

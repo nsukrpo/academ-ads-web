@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Dropdown from '../elements/Dropdown';
 import { URL_PATH } from '../../Constants';
 import axios from 'axios';
+import AuthService from '../../services/AuthService';
 
 export {BlockAdWindow, useModal};
 
@@ -70,7 +71,9 @@ const BlockAdWindow = ({ show, onCloseButtonClick, advertisementData }) => {
     }
 
     const onBlockButtonClick = async() => {
-        await axios.put(URL_PATH+'/advertisement/'+adData.id, adData);
+        await axios.put(URL_PATH+'/advertisement/'+adData.id, adData, { headers: {
+            Authorization: AuthService.getCurrentToken(),
+        }});
         navigate("/moderation")
     }
     

@@ -1,9 +1,11 @@
 import './modal_window.css';
 import { CloseButton } from '../elements/Buttons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Dropdown from '../elements/Dropdown';
 import axios from 'axios';
 import { URL_PATH } from '../../Constants';
+import AuthService from '../../services/AuthService';
+import ApiClient from '../../services/ApiClient';
 
 export { useBlockModal, BlockUserWindow }
 
@@ -19,6 +21,15 @@ const duration_options = [
     {value: "MONTH", label: "Месяц"},
     {value: "FOREVER", label: "Навсегда"},
 ]
+
+const getMinutes = (duration) => {
+    switch (duration){
+        case "DAY": return 1440;
+        case "WEEK": return 10080;
+        case "MONTH": return 20000;
+        case "FOREVER": return 30000;
+    }
+}
 
 const useBlockModal = () => {
     const [isShowing, setIsShowing] = useState(false)
@@ -50,22 +61,16 @@ const BlockUserWindow = ({ show, onCloseButtonClick, user }) => {
     const onDurationSelect = (newValue) => {
         setSelectedDuration(newValue.value)
     }
-    const getMinutes = (duration) => {
-        switch (duration){
-            case "DAY": return 1440;
-            case "WEEK": return 10080;
-            case "MONTH": return 20000;
-            case "FOREVER": return 30000;
-        }
-    }
-
+   
     const onBlockButtonClick = async () => {
-        await axios.post(URL_PATH+"/blocking", {
-            user_id: user.id,
-            reason: selectedReason,
-            time_minutes: getMinutes(selectedDuration)
-        })
-        onCloseButtonClick()
+        ApiClient.addBlocking(
+            {
+                user_id: user.id,
+                reason: selectedReason,
+                time_minutes: getMinutes(selectedDuration)
+            },
+            onCloseButtonClick()
+        )
     }
 
     return(

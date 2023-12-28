@@ -79,7 +79,7 @@ export function AuthScreen() {
                     </div>
 
                     <input 
-                        type="text" 
+                        type="password" 
                         className="auth__input heading__A1"
                         placeholder='Пароль'
                         name = "password"

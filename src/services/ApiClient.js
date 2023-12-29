@@ -49,7 +49,7 @@ class ApiClient {
         })
     }
 
-    async findAdPhoto({id, onRequestCompleted, onFail}) {
+    async findAdPhoto(id, onRequestCompleted, onFail) {
         await axios.get(
             URL_PATH+'/media/photos/'+id,
             { headers: { Authorization: AuthService.getCurrentToken() }}

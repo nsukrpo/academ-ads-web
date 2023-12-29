@@ -58,7 +58,7 @@ function UsersTable() {
 
     const loadAds = async()=>{
         users.forEach(async user => {
-            ApiClient.findAllAds( data =>{
+            ApiClient.findAllAds(null, data =>{
                 let arrAds = data.filter(ad => ad.author===user.id)
                 setAds(prevState => ({
                     ...prevState,

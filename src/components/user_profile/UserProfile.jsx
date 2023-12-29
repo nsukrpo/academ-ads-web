@@ -46,7 +46,7 @@ function UserProfile() {
         ApiClient.findUser(id, data => setUser(data))
     }
     const loadBlockedAds = async(id)=>{ 
-        ApiClient.findAllAds(data => 
+        ApiClient.findAllAds(null, data => 
             setBlockedAds(data.filter(ad => ad.author==id && isAdBlocked(ad.status)))    
         )
     }

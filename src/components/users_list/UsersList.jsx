@@ -26,6 +26,7 @@ function UsersTable() {
     const [blockings, setBlockings] = useState([])
     const [ads, setAds] = useState([])
     const [blockAds, setBlockAds] = useState([])
+    const [activePage, setActivePage] = useState(1);
 
     useEffect(()=>{
         loadUsers()
@@ -57,7 +58,7 @@ function UsersTable() {
 
     const loadAds = async()=>{
         users.forEach(async user => {
-            ApiClient.findAllAds( data =>{
+            ApiClient.findAllAds(null, data =>{
                 let arrAds = data.filter(ad => ad.author===user.id)
                 setAds(prevState => ({
                     ...prevState,
@@ -73,6 +74,13 @@ function UsersTable() {
         });
     }
 
+    const paginate = (pageNumber) => setActivePage(pageNumber);
+
+    let usersPerPage = 6; 
+
+    let sliceLeftBound = (activePage - 1) * usersPerPage;
+    let sliceRightBound = Math.min(activePage * usersPerPage, users.length);
+
     return(
         <div>
             <table className='users__table'>
@@ -87,7 +95,7 @@ function UsersTable() {
                 </thead>
                 <tbody>
                     {
-                        users.map((user) => (
+                        users.slice(sliceLeftBound, sliceRightBound).map((user) => (
                             <tr>
                                 <td>
                                     <Link className='heading__C1' to={"/users/"+user.id}>{user.name}</Link>
@@ -105,7 +113,12 @@ function UsersTable() {
                     }
                 </tbody>
             </table>
-            <Pagination/>
+            <Pagination
+                usersPerPage={usersPerPage}
+                totalUsers={users.length}
+                activePage={activePage}
+                paginate={paginate}
+            />
         </div>
     )
 }

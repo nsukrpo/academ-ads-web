@@ -23,9 +23,13 @@ export default function Moderation () {
   }, []);
 
   const loadAds=async()=>{ 
+    ApiClient.findAllAds(AD_STATUS_SENT_MODERATION, data => setAdvertisement(data))
+    
+    /*
     ApiClient.findAllAds(data => 
       setAdvertisement(data.filter((item)=>item.status===AD_STATUS_SENT_MODERATION))
     )
+    */
   }
   
   return (

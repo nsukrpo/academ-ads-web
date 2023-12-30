@@ -4,9 +4,16 @@ import AuthService from "./AuthService";
 
 class ApiClient {
 
-    async findAllAds(onRequestCompleted) {
+    async findAllAds(status, onRequestCompleted) {
+
+        let urlQuery = URL_PATH + '/advertisement'
+
+        if (status !== null) {
+            urlQuery = urlQuery + '?status=' + status;
+        }
+
         await axios.get(
-            URL_PATH + '/advertisement',
+            urlQuery,
             { headers: { Authorization: AuthService.getCurrentToken() }}
         )
             .then((response)=> onRequestCompleted(response.data))
@@ -42,7 +49,7 @@ class ApiClient {
         })
     }
 
-    async findAdPhoto({id, onRequestCompleted, onFail}) {
+    async findAdPhoto(id, onRequestCompleted, onFail) {
         await axios.get(
             URL_PATH+'/media/photos/'+id,
             { headers: { Authorization: AuthService.getCurrentToken() }}

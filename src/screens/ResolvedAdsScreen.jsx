@@ -24,7 +24,7 @@ export default function ResolvedAds () {
   }, []);
 
   const loadAds=async()=>{
-      ApiClient.findAllAds(data => 
+      ApiClient.findAllAds(null, data => 
         setAdvertisement(data.filter((item)=>item.status!==AD_STATUS_SENT_MODERATION))
       )
   }

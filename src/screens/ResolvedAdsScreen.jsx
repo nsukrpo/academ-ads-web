@@ -3,15 +3,16 @@ import Sidebar, { pages } from "../components/sidebar/Sidebar";
 import Infobar from "../components/infobar/Infobar";
 import AdvertisementItem from '../components/component_list/AdvertisementItem';
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { AD_STATUS_SENT_MODERATION, URL_PATH, isAdmin } from "../Constants";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/AuthService";
 import ApiClient from "../services/ApiClient";
+import Pagination from "../components/elements/Pagination";
 
 export default function ResolvedAds () {
   let navigate = useNavigate()
   const [advertisements, setAdvertisement] = useState([])
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(()=>{
     const curUser = AuthService.getCurrentUser()
@@ -21,12 +22,16 @@ export default function ResolvedAds () {
       } else {
         loadAds();
       }
-  }, []);
+  }, [activePage]);
 
   const loadAds=async()=>{
-      ApiClient.findAllAds(null, data => 
+      ApiClient.findAllAds(null, activePage-1, data => 
         setAdvertisement(data.filter((item)=>item.status!==AD_STATUS_SENT_MODERATION))
       )
+  }
+  
+  const paginate = (pageNumber) => {
+    setActivePage(pageNumber);
   }
   
   return (
@@ -47,6 +52,10 @@ export default function ResolvedAds () {
                   <AdvertisementItem data={ad}/>
                 ))
               }
+        <Pagination
+            activePage={activePage}
+            paginate={paginate}
+        />
             </div>
           </div>
         </div>

@@ -28,7 +28,7 @@ function AdvertisementItem({data}) {
     const loadPhoto = async(id)=>{
         ApiClient.findAdPhoto(
             id,
-            data => setPhotoSrc(`data:image/jpeg;base64,${data}`),
+            data => setPhotoSrc(`data:image/jpeg;${data}`),
             setPhotoSrc("./../../images/default_photo.svg")
         )
     }

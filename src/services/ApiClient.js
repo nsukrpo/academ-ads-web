@@ -4,16 +4,15 @@ import AuthService from "./AuthService";
 
 class ApiClient {
 
-    async findAllAds(status, onRequestCompleted) {
+    async findAllAds(status, page, onRequestCompleted) {
 
-        let urlQuery = URL_PATH + '/advertisement'
-
+        let parameter = ""
         if (status !== null) {
-            urlQuery = urlQuery + '?status=' + status;
+            parameter = '?status=' + status;
         }
 
         await axios.get(
-            urlQuery,
+            URL_PATH + '/advertisement?page='+page+parameter,
             { headers: { Authorization: AuthService.getCurrentToken() }}
         )
             .then((response)=> onRequestCompleted(response.data))
@@ -202,9 +201,9 @@ class ApiClient {
           })
     }
 
-    async findAllUsers(onRequestCompleted) {
+    async findAllUsers(page, onRequestCompleted) {
         await axios.get(
-            URL_PATH + '/user',
+            URL_PATH + '/user?page='+page,  
             { headers: { Authorization: AuthService.getCurrentToken() }}
         )
         .then((response)=>{

@@ -30,16 +30,17 @@ function UsersTable() {
 
     useEffect(()=>{
         loadUsers()
-    }, [])
+    }, [activePage])
+
     useEffect(()=>{
         if (users.length > 0) {
-           loadBlockings()
-           loadAds()
+            loadBlockings()
+            loadAds()
         }
     }, [users])
 
     const loadUsers=async()=>{
-        ApiClient.findAllUsers(data =>
+        ApiClient.findAllUsers(activePage-1, data =>
             setUsers(data)
         )
     }
@@ -74,12 +75,9 @@ function UsersTable() {
         });
     }
 
-    const paginate = (pageNumber) => setActivePage(pageNumber);
-
-    let usersPerPage = 6; 
-
-    let sliceLeftBound = (activePage - 1) * usersPerPage;
-    let sliceRightBound = Math.min(activePage * usersPerPage, users.length);
+    const paginate = (pageNumber) => {
+        setActivePage(pageNumber);
+    }
 
     return(
         <div>
@@ -87,22 +85,18 @@ function UsersTable() {
                 <thead>
                     <tr>
                         <th className='nunito__12'>НИКНЕЙМ</th>
-                        <th className='nunito__12'>КОЛИЧЕСТВО ОТКЛОНЕННЫХ ОБЪЯВЛЕНИЙ</th>
                         <th className='nunito__12'>КОЛИЧЕСТВО БЛОКИРОВОК</th>
-                        <th className='nunito__12'>КОЛИЧЕСТВО ОПУБЛИКОВАННЫХ ОБЪЯВЛЕНИЙ</th>
                         <th className='nunito__12'>СТАТУС</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        users.slice(sliceLeftBound, sliceRightBound).map((user) => (
+                        users.map((user) => (
                             <tr>
                                 <td>
                                     <Link className='heading__C1' to={"/users/"+user.id}>{user.name}</Link>
                                 </td>
-                                <td className='heading__C1'>{blockAds[user.id]}</td>
                                 <td className='heading__C1'>{blockings[user.id]}</td>
-                                <td className='heading__C1'>{ads[user.id]}</td>
                                 <td className='heading__C1'>
                                     {
                                         (blockings[user.id]===0 && "Не заблокирован") || "Заблокирован"
@@ -114,8 +108,6 @@ function UsersTable() {
                 </tbody>
             </table>
             <Pagination
-                usersPerPage={usersPerPage}
-                totalUsers={users.length}
                 activePage={activePage}
                 paginate={paginate}
             />

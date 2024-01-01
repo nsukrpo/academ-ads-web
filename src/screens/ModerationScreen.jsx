@@ -7,10 +7,12 @@ import { AD_STATUS_SENT_MODERATION, isAdmin } from "../Constants";
 import AuthService from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import ApiClient from "../services/ApiClient";
+import Pagination from "../components/elements/Pagination";
 
 export default function Moderation () {
   let navigate = useNavigate()
   const [advertisements, setAdvertisement] = useState([])
+  // const [activePage, setActivePage] = useState(1);
 
   useEffect(()=>{
       const curUser = AuthService.getCurrentUser()
@@ -23,14 +25,22 @@ export default function Moderation () {
   }, []);
 
   const loadAds=async()=>{ 
-    ApiClient.findAllAds(AD_STATUS_SENT_MODERATION, data => setAdvertisement(data))
+    // ApiClient.findAllAds(
+    //   AD_STATUS_SENT_MODERATION, 
+    //   activePage-1, 
+    //   data => setAdvertisement(data)
+    // )
     
-    /*
-    ApiClient.findAllAds(data => 
-      setAdvertisement(data.filter((item)=>item.status===AD_STATUS_SENT_MODERATION))
+    
+    ApiClient.findAllAds(
+      null,
+      -1, 
+      data => setAdvertisement(data.filter((item)=>item.status===AD_STATUS_SENT_MODERATION))
     )
-    */
   }
+  // const paginate = (pageNumber) => {
+  //   setActivePage(pageNumber);
+  // }
   
   return (
     <div>
@@ -47,11 +57,15 @@ export default function Moderation () {
                 }
                 </div>
                 {
-                  advertisements?.map((ad)=>(
+                  advertisements.map((ad)=>(
                       <AdvertisementItem data={ad}/>
                   ))
                 }
             </div>
+            {/*<Pagination
+                activePage={activePage}
+                paginate={paginate}
+              />*/}
           </div>
         </div>
     </div>
